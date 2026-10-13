@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bpc31afsdsqya"]
+
+[ext_resource type="Script" uid="uid://cnbfdg5aeab4" path="res://game/player/scene/player.gd" id="1_47q0x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rxf60"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rxf60"]
+size = Vector2(175, 299)
+
+[node name="Player" type="CharacterBody2D" unique_id=1428630364]
+script = ExtResource("1_47q0x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2064362555]
+sprite_frames = SubResource("SpriteFrames_rxf60")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1403656265]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.25
+offset_top = -150.0
+offset_right = 86.25
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=3044104]
+shape = SubResource("RectangleShape2D_rxf60")
