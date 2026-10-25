@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://fdchh820n8nm" path="res://game/shader images/ocean.png" id="2_w20i0"]
 [ext_resource type="Texture2D" uid="uid://dvhe11ksasun" path="res://temporary images/Screenshot 2026-10-25 at 3.24 Background Removed.12 PM.png" id="3_3do2o"]
 [ext_resource type="Shader" uid="uid://ddj4wyh3n2esa" path="res://game/main_menu/BuoyOutline.gdshader" id="3_kugup"]
+[ext_resource type="Script" uid="uid://mb0n1bnn6nms" path="res://game/main_menu/main_panel.gd" id="3_ml5p0"]
+[ext_resource type="Script" uid="uid://vxy4b0llxumr" path="res://game/main_menu/buoy_connector.gd" id="4_jmuum"]
 [ext_resource type="Script" uid="uid://qskq68k37es1" path="res://game/main_menu/buoy.gd" id="5_0r8cd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i7avt"]
@@ -84,9 +86,10 @@ _data = {
 
 [node name="StartMenu" type="Node2D" unique_id=1450598901]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=566146352]
+[node name="OceanLayer" type="CanvasLayer" parent="." unique_id=566146352]
+visible = false
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1525633029]
+[node name="ColorRect" type="ColorRect" parent="OceanLayer" unique_id=1525633029]
 material = SubResource("ShaderMaterial_i7avt")
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,6 +97,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Panel" type="CanvasLayer" parent="." unique_id=337315117]
+script = ExtResource("3_ml5p0")
+
+[node name="Panel" type="Panel" parent="Panel" unique_id=2127569896]
+offset_left = 918.0
+offset_top = 66.0
+offset_right = 1865.0
+offset_bottom = 995.0
+
+[node name="StartPoint" type="Line2D" parent="Panel/Panel" unique_id=2008565663]
+position = Vector2(1, 479)
+points = PackedVector2Array(0, 0)
+
+[node name="Line2D" type="Line2D" parent="Panel" unique_id=1831633514 node_paths=PackedStringArray("buoy", "camera", "start_point")]
+points = PackedVector2Array(918, 630, 557, 421)
+script = ExtResource("4_jmuum")
+buoy = NodePath("../../Buoy")
+camera = NodePath("../../Camera2D")
+start_point = NodePath("../Panel/StartPoint")
 
 [node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("1_qvd5t")]
 position = Vector2(960, 640)
@@ -122,6 +145,11 @@ script = ExtResource("5_0r8cd")
 libraries/ = SubResource("AnimationLibrary_7b18s")
 autoplay = &"sway"
 speed_scale = 0.7
+
+[node name="EndPoint" type="Line2D" parent="Buoy" unique_id=1814284995]
+position = Vector2(258.673, 939.5179)
+scale = Vector2(2.0598505, 2.0598505)
+points = PackedVector2Array(0, 0)
 
 [connection signal="mouse_entered" from="Buoy" to="Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Buoy" to="Buoy" method="_on_mouse_exited"]
