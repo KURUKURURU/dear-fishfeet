@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bkf5kvgrma4h5"]
+
+[ext_resource type="Script" uid="uid://vumyic4xyean" path="res://learn_env.gd" id="1_4j6lk"]
+
+[node name="LearnEnv" type="Node2D" unique_id=1553316163]
+script = ExtResource("1_4j6lk")

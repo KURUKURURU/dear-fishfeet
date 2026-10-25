@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://dl6mp13bos7ul"]
+
+[ext_resource type="PackedScene" uid="uid://bou5ii3ekbhdu" path="res://game/player/scene/camera_2d.tscn" id="1_qvd5t"]
+[ext_resource type="Shader" uid="uid://cnb4ydnrhg7je" path="res://game/ocean_texture.gdshader" id="1_xgbe7"]
+[ext_resource type="Texture2D" uid="uid://77smwlbadsw2" path="res://temporary images/startmenu_water.jpg" id="2_5wo8i"]
+[ext_resource type="Texture2D" uid="uid://fdchh820n8nm" path="res://game/shader images/ocean.png" id="2_w20i0"]
+[ext_resource type="Texture2D" uid="uid://dvhe11ksasun" path="res://temporary images/Screenshot 2026-10-25 at 3.24 Background Removed.12 PM.png" id="3_3do2o"]
+[ext_resource type="Shader" uid="uid://ddj4wyh3n2esa" path="res://game/main_menu/BuoyOutline.gdshader" id="3_kugup"]
+[ext_resource type="Script" uid="uid://qskq68k37es1" path="res://game/main_menu/buoy.gd" id="5_0r8cd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i7avt"]
+shader = ExtResource("1_xgbe7")
+shader_parameter/NOISE_TEXTURE = ExtResource("2_w20i0")
+shader_parameter/strength = 1.60000002384192
+shader_parameter/uv_scaling = 1.0
+shader_parameter/movement_direction = Vector2(1, 0)
+shader_parameter/movement_speed = 0.22999999485904
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3do2o"]
+shader = ExtResource("3_kugup")
+shader_parameter/outline_width = 0.010000000475
+shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
+shader_parameter/atlas_region_pos = Vector2(0, 0)
+shader_parameter/atlas_region_size = Vector2(1, 1)
+shader_parameter/draw_size = Vector2(1, 1)
+
+[sub_resource type="Animation" id="Animation_xgbe7"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.14491531, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(369, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_w20i0"]
+resource_name = "sway"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 3, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 1, 0, 0.14491531, -0.5, 0, 0.5, 0, 0, -0.25, 0, 1, 0, -0.05, -0.165, -0.024152553, 1, 0.1, 0, -0.25, 0, 0.7, 0),
+"times": PackedFloat32Array(0, 0.99, 2, 2.99, 4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 2),
+"points": PackedFloat32Array(286.99997, -0.25, 0, 0.25, 0, 310, -1, -20.500008, 0.2, 20.5, 286.99997, -0.25, 0, 0.5, 0.4),
+"times": PackedFloat32Array(0.6, 2.3, 4)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7b18s"]
+_data = {
+&"RESET": SubResource("Animation_xgbe7"),
+&"sway": SubResource("Animation_w20i0")
+}
+
+[node name="StartMenu" type="Node2D" unique_id=1450598901]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=566146352]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1525633029]
+material = SubResource("ShaderMaterial_i7avt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("1_qvd5t")]
+position = Vector2(960, 640)
+position_smoothing_enabled = true
+
+[node name="Background" type="TextureRect" parent="." unique_id=455855703]
+offset_left = -175.0
+offset_top = -695.0
+offset_right = 2073.0
+offset_bottom = 1978.0
+texture = ExtResource("2_5wo8i")
+
+[node name="Buoy" type="TextureButton" parent="." unique_id=584366845]
+material = SubResource("ShaderMaterial_3do2o")
+offset_left = 369.0
+offset_top = -536.0
+offset_right = 897.0
+offset_bottom = 520.0
+rotation = 0.14491531
+scale = Vector2(0.48547217, 0.48547217)
+pivot_offset = Vector2(255.42151, 959.8902)
+texture_normal = ExtResource("3_3do2o")
+script = ExtResource("5_0r8cd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Buoy" unique_id=352635606]
+libraries/ = SubResource("AnimationLibrary_7b18s")
+autoplay = &"sway"
+speed_scale = 0.7
+
+[connection signal="mouse_entered" from="Buoy" to="Buoy" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Buoy" to="Buoy" method="_on_mouse_exited"]

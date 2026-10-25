@@ -1,25 +1,23 @@
 extends Camera2D
-var speed = 10
-var vertical_movement_zone_size = 100
-var horizontal_movement_zone_size = 100
 
-var window_size = Vector2.ZERO
+@export var max_y_offset: float = 1200.0
+@export var max_x_offset: float = 200.0
+@export var smooth_speed: float = 10.0
 
-func _ready():
-	window_size = get_tree().root.size
+var initial_position: Vector2
 
-func _process(delta):
-	# this will get the position in the viewport/game-window
-	var mouse_position = get_viewport().get_mouse_position()
+func _ready() -> void:
+	initial_position = global_position
+
+func _process(delta: float) -> void:
+	var viewport_center = get_viewport_rect().size / 2.0
+	var mouse_pos = get_viewport().get_mouse_position()
 	
-	# check vertical
-	if (mouse_position.y < vertical_movement_zone_size):
-		position.y += speed * delta
-	elif (mouse_position.y > window_size.y - vertical_movement_zone_size):
-		position.y -= speed * delta
+	var offset_from_center = mouse_pos - viewport_center
 	
-	# check horizontal
-	if (mouse_position.x < horizontal_movement_zone_size):
-		position.x += speed * delta
-	elif (mouse_position.x > window_size.x - horizontal_movement_zone_size):
-		position.x -= speed * delta
+	var clamped_x = clamp(offset_from_center.x, -max_x_offset, max_x_offset) # makes it snap nicelyyy
+	var clamped_y = clamp(offset_from_center.y, -max_y_offset, max_y_offset) # makes it snap nicelyyy
+	
+	var target_pos = initial_position + Vector2(clamped_x * 0.9, clamped_y * 0.9) 
+	
+	global_position = global_position.lerp(target_pos, smooth_speed * delta)
