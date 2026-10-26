@@ -1,12 +1,15 @@
 extends Line2D
 
-@export var buoy : Control
+@export var buoy : Node2D
 @export var camera : Camera2D  # Use Camera2D for 2D camera projections
 @export var start_point : Node2D
 
 func _process(delta: float) -> void:
 	if not buoy or not camera:
+		hide()
 		return
+	
+	show()
 	
 	set_point_position(0, start_point.global_position)
 	

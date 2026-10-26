@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dl6mp13bos7ul"]
 
 [ext_resource type="PackedScene" uid="uid://bou5ii3ekbhdu" path="res://game/player/scene/camera_2d.tscn" id="1_qvd5t"]
+[ext_resource type="Script" uid="uid://ogyt4jxe1aer" path="res://game/main_menu/start_menu.gd" id="1_to17x"]
 [ext_resource type="Shader" uid="uid://cnb4ydnrhg7je" path="res://game/ocean_texture.gdshader" id="1_xgbe7"]
 [ext_resource type="Texture2D" uid="uid://77smwlbadsw2" path="res://temporary images/startmenu_water.jpg" id="2_5wo8i"]
 [ext_resource type="Texture2D" uid="uid://fdchh820n8nm" path="res://game/shader images/ocean.png" id="2_w20i0"]
@@ -9,6 +10,8 @@
 [ext_resource type="Script" uid="uid://mb0n1bnn6nms" path="res://game/main_menu/main_panel.gd" id="3_ml5p0"]
 [ext_resource type="Script" uid="uid://vxy4b0llxumr" path="res://game/main_menu/buoy_connector.gd" id="4_jmuum"]
 [ext_resource type="Script" uid="uid://qskq68k37es1" path="res://game/main_menu/buoy.gd" id="5_0r8cd"]
+[ext_resource type="AudioStream" uid="uid://dop3fccdrxrol" path="res://game/sfx/ocean.wav" id="10_42ss3"]
+[ext_resource type="AudioStream" uid="uid://dodh6yvgvf8ak" path="res://game/sfx/seagull.wav" id="11_to17x"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i7avt"]
 shader = ExtResource("1_xgbe7")
@@ -18,13 +21,120 @@ shader_parameter/uv_scaling = 1.0
 shader_parameter/movement_direction = Vector2(1, 0)
 shader_parameter/movement_speed = 0.22999999485904
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3do2o"]
-shader = ExtResource("3_kugup")
-shader_parameter/outline_width = 0.010000000475
+[sub_resource type="Gradient" id="Gradient_jmuum"]
+offsets = PackedFloat32Array(0, 0.5620438)
+colors = PackedColorArray(0.6, 0.6, 0.6, 1, 1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42ss3"]
+bg_color = Color(0.6, 0.6, 0.6, 0.78039217)
+corner_radius_top_left = 150
+corner_radius_top_right = 150
+corner_radius_bottom_right = 150
+corner_radius_bottom_left = 150
+
+[sub_resource type="Theme" id="Theme_jmuum"]
+Panel/styles/panel = SubResource("StyleBoxFlat_42ss3")
+
+[sub_resource type="Shader" id="Shader_to17x"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float outline_width : hint_range(0.0, 32.0) = 4.0;
+uniform vec4 outline_tint : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+// AtlasTexture region in atlas pixels. These values are explicit because
+// REGION_RECT is unavailable in vertex().
+uniform vec2 atlas_region_pos = vec2(0.0);
+uniform vec2 atlas_region_size = vec2(1.0);
+uniform vec2 draw_size = vec2(1.0);
+
+varying vec2 expanded_local_uv;
+varying vec4 item_modulate;
+
+vec2 resolved_region_size(vec2 atlas_size) {
+    return atlas_region_size.x > 1.0 && atlas_region_size.y > 1.0
+        ? atlas_region_size
+        : atlas_size;
+}
+
+void vertex() {
+    vec2 atlas_size = vec2(1.0) / TEXTURE_PIXEL_SIZE;
+    vec2 region_size = resolved_region_size(atlas_size);
+    vec2 region_uv_pos = atlas_region_pos / atlas_size;
+    vec2 region_uv_size = region_size / atlas_size;
+    // Atlas sprites supply region UVs rather than quad-local UVs.
+    expanded_local_uv = (UV - region_uv_pos) / region_uv_size;
+    item_modulate = COLOR;
+    VERTEX += (expanded_local_uv * 2.0 - 1.0) * outline_width;
+}
+
+void fragment() {
+    vec2 atlas_size = vec2(1.0) / TEXTURE_PIXEL_SIZE;
+    vec2 region_size = resolved_region_size(atlas_size);
+    vec2 resolved_draw_size = max(draw_size, vec2(1.0));
+    vec2 outline_size = vec2(outline_width);
+    vec2 expanded_draw_size = resolved_draw_size + outline_size * 2.0;
+
+    // Outline geometry and sampling use node-local draw pixels. Atlas pixels
+    // are only used at texture lookup, so differently sized sprites retain
+    // the same visual stroke width.
+    vec2 draw_pixel = expanded_local_uv * expanded_draw_size - outline_size;
+    bool inside_source =
+        draw_pixel.x >= 0.0 &&
+        draw_pixel.y >= 0.0 &&
+        draw_pixel.x < resolved_draw_size.x &&
+        draw_pixel.y < resolved_draw_size.y;
+
+    vec4 sampled_rgba = vec4(0.0);
+    if (inside_source) {
+        vec2 region_pixel = draw_pixel / resolved_draw_size * region_size;
+        vec2 safe_pixel = clamp(region_pixel, vec2(0.5), region_size - vec2(0.5));
+        sampled_rgba = texture(TEXTURE, (atlas_region_pos + safe_pixel) / atlas_size);
+    }
+
+    float outline_alpha = 0.0;
+    if (outline_width > 0.0) {
+        const int direction_count = 16;
+        const int step_count = 4;
+        for (int direction_index = 0; direction_index < direction_count; direction_index++) {
+            float angle = TAU * float(direction_index) / float(direction_count);
+            vec2 direction = vec2(cos(angle), sin(angle));
+            for (int step_index = 1; step_index <= step_count; step_index++) {
+                float step_ratio = float(step_index) / float(step_count);
+                vec2 sample_draw_pixel = draw_pixel + direction * outline_size * step_ratio;
+                bool sample_inside =
+                    sample_draw_pixel.x >= 0.0 &&
+                    sample_draw_pixel.y >= 0.0 &&
+                    sample_draw_pixel.x < resolved_draw_size.x &&
+                    sample_draw_pixel.y < resolved_draw_size.y;
+                if (sample_inside) {
+                    vec2 sample_pixel = sample_draw_pixel / resolved_draw_size * region_size;
+                    vec2 safe_sample_pixel = clamp(sample_pixel, vec2(0.5), region_size - vec2(0.5));
+                    outline_alpha = max(
+                        outline_alpha,
+                        texture(TEXTURE, (atlas_region_pos + safe_sample_pixel) / atlas_size).a);
+                }
+            }
+        }
+    }
+
+    outline_alpha *= outline_tint.a * (1.0 - sampled_rgba.a);
+    vec4 result_rgba = vec4(outline_tint.rgb, outline_alpha);
+    result_rgba.rgb = mix(result_rgba.rgb, sampled_rgba.rgb, sampled_rgba.a);
+    result_rgba.a = sampled_rgba.a + outline_alpha;
+    COLOR = result_rgba * item_modulate;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4vmrj"]
+shader = SubResource("Shader_to17x")
+shader_parameter/outline_width = 0.02000000095
 shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
 shader_parameter/atlas_region_pos = Vector2(0, 0)
 shader_parameter/atlas_region_size = Vector2(1, 1)
 shader_parameter/draw_size = Vector2(1, 1)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_to17x"]
 
 [sub_resource type="Animation" id="Animation_xgbe7"]
 length = 0.001
@@ -37,17 +147,6 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0.14491531, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:x")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(369, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 
@@ -66,17 +165,6 @@ tracks/0/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 1, 0, 0.14491531, -0.5, 0, 0.5, 0, 0, -0.25, 0, 1, 0, -0.05, -0.165, -0.024152553, 1, 0.1, 0, -0.25, 0, 0.7, 0),
 "times": PackedFloat32Array(0, 0.99, 2, 2.99, 4)
 }
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:x")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 2),
-"points": PackedFloat32Array(286.99997, -0.25, 0, 0.25, 0, 310, -1, -20.500008, 0.2, 20.5, 286.99997, -0.25, 0, 0.5, 0.4),
-"times": PackedFloat32Array(0.6, 2.3, 4)
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7b18s"]
 _data = {
@@ -84,7 +172,31 @@ _data = {
 &"sway": SubResource("Animation_w20i0")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_to17x"]
+shader = ExtResource("3_kugup")
+shader_parameter/outline_width = 0.02000000095
+shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
+shader_parameter/atlas_region_pos = Vector2(0, 0)
+shader_parameter/atlas_region_size = Vector2(1, 1)
+shader_parameter/draw_size = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lg0jb"]
+shader = ExtResource("3_kugup")
+shader_parameter/outline_width = 0.02000000095
+shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
+shader_parameter/atlas_region_pos = Vector2(0, 0)
+shader_parameter/atlas_region_size = Vector2(1, 1)
+shader_parameter/draw_size = Vector2(1, 1)
+
 [node name="StartMenu" type="Node2D" unique_id=1450598901]
+script = ExtResource("1_to17x")
+
+[node name="Background" type="TextureRect" parent="." unique_id=455855703]
+offset_left = -175.0
+offset_top = -695.0
+offset_right = 3942.0
+offset_bottom = 1978.0
+texture = ExtResource("2_5wo8i")
 
 [node name="OceanLayer" type="CanvasLayer" parent="." unique_id=566146352]
 visible = false
@@ -101,55 +213,132 @@ mouse_filter = 2
 [node name="Panel" type="CanvasLayer" parent="." unique_id=337315117]
 script = ExtResource("3_ml5p0")
 
-[node name="Panel" type="Panel" parent="Panel" unique_id=2127569896]
-offset_left = 918.0
-offset_top = 66.0
-offset_right = 1865.0
-offset_bottom = 995.0
-
-[node name="StartPoint" type="Line2D" parent="Panel/Panel" unique_id=2008565663]
-position = Vector2(1, 479)
-points = PackedVector2Array(0, 0)
-
-[node name="Line2D" type="Line2D" parent="Panel" unique_id=1831633514 node_paths=PackedStringArray("buoy", "camera", "start_point")]
+[node name="Bouy_Line" type="Line2D" parent="Panel" unique_id=1831633514 node_paths=PackedStringArray("camera", "start_point")]
+position = Vector2(0, -73)
 points = PackedVector2Array(918, 630, 557, 421)
+default_color = Color(0.6, 0.6, 0.6, 1)
+gradient = SubResource("Gradient_jmuum")
 script = ExtResource("4_jmuum")
-buoy = NodePath("../../Buoy")
 camera = NodePath("../../Camera2D")
 start_point = NodePath("../Panel/StartPoint")
+
+[node name="Panel" type="Panel" parent="Panel" unique_id=2127569896]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.117000006
+anchor_right = 0.93500006
+anchor_bottom = 0.919
+offset_left = -53.0
+offset_top = -41.36001
+offset_right = 58.799927
+offset_bottom = 0.47998047
+theme = SubResource("Theme_jmuum")
+metadata/_edit_use_anchors_ = true
+
+[node name="StartPoint" type="Line2D" parent="Panel/Panel" unique_id=2008565663]
+position = Vector2(462, 453)
+points = PackedVector2Array(0, 0)
+round_precision = 32
 
 [node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("1_qvd5t")]
 position = Vector2(960, 640)
 position_smoothing_enabled = true
 
-[node name="Background" type="TextureRect" parent="." unique_id=455855703]
-offset_left = -175.0
-offset_top = -695.0
-offset_right = 2073.0
-offset_bottom = 1978.0
-texture = ExtResource("2_5wo8i")
-
-[node name="Buoy" type="TextureButton" parent="." unique_id=584366845]
-material = SubResource("ShaderMaterial_3do2o")
-offset_left = 369.0
-offset_top = -536.0
-offset_right = 897.0
-offset_bottom = 520.0
+[node name="1_Buoy" type="TextureButton" parent="." unique_id=584366845]
+material = SubResource("ShaderMaterial_4vmrj")
+offset_left = 286.99997
+offset_top = -583.0
+offset_right = 815.0
+offset_bottom = 473.0
 rotation = 0.14491531
-scale = Vector2(0.48547217, 0.48547217)
+scale = Vector2(0.43106195, 0.43106195)
 pivot_offset = Vector2(255.42151, 959.8902)
+toggle_mode = true
+button_group = SubResource("ButtonGroup_to17x")
 texture_normal = ExtResource("3_3do2o")
 script = ExtResource("5_0r8cd")
+metadata/_edit_use_anchors_ = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Buoy" unique_id=352635606]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="1_Buoy" unique_id=352635606]
 libraries/ = SubResource("AnimationLibrary_7b18s")
 autoplay = &"sway"
 speed_scale = 0.7
 
-[node name="EndPoint" type="Line2D" parent="Buoy" unique_id=1814284995]
+[node name="EndPoint" type="Line2D" parent="1_Buoy" unique_id=1814284995]
 position = Vector2(258.673, 939.5179)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
-[connection signal="mouse_entered" from="Buoy" to="Buoy" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Buoy" to="Buoy" method="_on_mouse_exited"]
+[node name="2_Buoy" type="TextureButton" parent="." unique_id=512295179]
+material = SubResource("ShaderMaterial_to17x")
+offset_left = 531.0
+offset_top = 69.0
+offset_right = 1059.0
+offset_bottom = 1125.0
+rotation = 0.14491531
+scale = Vector2(0.43106195, 0.43106195)
+pivot_offset = Vector2(255.42151, 959.8902)
+toggle_mode = true
+button_group = SubResource("ButtonGroup_to17x")
+texture_normal = ExtResource("3_3do2o")
+script = ExtResource("5_0r8cd")
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="2_Buoy" unique_id=41668392]
+libraries/ = SubResource("AnimationLibrary_7b18s")
+autoplay = &"sway"
+speed_scale = 0.4
+
+[node name="EndPoint" type="Line2D" parent="2_Buoy" unique_id=1969810122]
+position = Vector2(258.673, 939.5179)
+scale = Vector2(2.0598505, 2.0598505)
+points = PackedVector2Array(0, 0)
+
+[node name="3_Buoy" type="TextureButton" parent="." unique_id=2050325490]
+material = SubResource("ShaderMaterial_lg0jb")
+offset_left = 1204.0
+offset_top = 669.0
+offset_right = 1732.0
+offset_bottom = 1725.0
+rotation = 0.14491531
+scale = Vector2(0.43106195, 0.43106195)
+pivot_offset = Vector2(255.42151, 959.8902)
+toggle_mode = true
+button_group = SubResource("ButtonGroup_to17x")
+texture_normal = ExtResource("3_3do2o")
+script = ExtResource("5_0r8cd")
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="3_Buoy" unique_id=486520292]
+libraries/ = SubResource("AnimationLibrary_7b18s")
+autoplay = &"sway"
+
+[node name="EndPoint" type="Line2D" parent="3_Buoy" unique_id=1047858134]
+position = Vector2(258.673, 939.5179)
+scale = Vector2(2.0598505, 2.0598505)
+points = PackedVector2Array(0, 0)
+
+[node name="wind_track" type="AudioStreamPlayer2D" parent="." unique_id=650035642]
+position = Vector2(442, -764)
+stream = ExtResource("10_42ss3")
+autoplay = true
+attenuation = 1.4142135
+panning_strength = 1.48
+
+[node name="seagulls_track" type="AudioStreamPlayer2D" parent="." unique_id=216756436]
+position = Vector2(1519, 1619)
+stream = ExtResource("11_to17x")
+autoplay = true
+
+[connection signal="level_1_preview" from="1_Buoy" to="." method="_on__buoy_level_1_preview"]
+[connection signal="mouse_entered" from="1_Buoy" to="1_Buoy" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="1_Buoy" to="1_Buoy" method="_on_mouse_exited"]
+[connection signal="pressed" from="1_Buoy" to="1_Buoy" method="_on_pressed"]
+[connection signal="level_2_preview" from="2_Buoy" to="." method="_on__buoy_level_2_preview"]
+[connection signal="mouse_entered" from="2_Buoy" to="2_Buoy" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="2_Buoy" to="2_Buoy" method="_on_mouse_exited"]
+[connection signal="pressed" from="2_Buoy" to="2_Buoy" method="_on_pressed"]
+[connection signal="level_3_preview" from="3_Buoy" to="." method="_on__buoy_level_3_preview"]
+[connection signal="mouse_entered" from="3_Buoy" to="3_Buoy" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="3_Buoy" to="3_Buoy" method="_on_mouse_exited"]
+[connection signal="pressed" from="3_Buoy" to="3_Buoy" method="_on_pressed"]
