@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://vxy4b0llxumr" path="res://game/main_menu/buoy_connector.gd" id="4_jmuum"]
 [ext_resource type="Script" uid="uid://qskq68k37es1" path="res://game/main_menu/buoy.gd" id="5_0r8cd"]
 [ext_resource type="Texture2D" uid="uid://cpeimhehk2bn7" path="res://icon.svg" id="7_lg0jb"]
-[ext_resource type="FontFile" uid="uid://ccf8o4cpwedkw" path="res://fonts/Beholden/Beholden-Regular.ttf" id="8_lg0jb"]
+[ext_resource type="FontFile" uid="uid://3i21os4h65ta" path="res://fonts/Xanmono_Font_1_0/OpenType (.otf)/Xanmono-Regular.otf" id="8_lg0jb"]
 [ext_resource type="AudioStream" uid="uid://dop3fccdrxrol" path="res://game/sfx/ocean.wav" id="10_42ss3"]
 [ext_resource type="AudioStream" uid="uid://dodh6yvgvf8ak" path="res://game/sfx/seagull.wav" id="11_to17x"]
 
@@ -23,9 +23,51 @@ shader_parameter/uv_scaling = 1.0
 shader_parameter/movement_direction = Vector2(1, 0)
 shader_parameter/movement_speed = 0.22999999485904
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5w8mk"]
+
 [sub_resource type="Curve" id="Curve_to17x"]
 _data = [Vector2(0, 0.9937107), 0.0, 0.0, 0, 0, Vector2(0.58522725, 0.7704402), -0.9290213, -0.9290213, 0, 0, Vector2(0.9857955, 0.1855346), -2.3983223, 0.0, 0, 0]
 point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_lg0jb"]
+colors = PackedColorArray(0.45490196, 0.19215687, 0.18431373, 1, 0.38431373, 0.16078432, 0.15686275, 0)
+
+[sub_resource type="Animation" id="Animation_lg0jb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jlh6b"]
+resource_name = "gradient_blend"
+length = 1.4666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.4666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5w8mk"]
+_data = {
+&"RESET": SubResource("Animation_lg0jb"),
+&"gradient_blend": SubResource("Animation_jlh6b")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42ss3"]
 bg_color = Color(0.78988755, 0.7052207, 0.5254058, 1)
@@ -44,8 +86,45 @@ corner_radius_bottom_left = 150
 Panel/styles/panel = SubResource("StyleBoxFlat_42ss3")
 
 [sub_resource type="Theme" id="Theme_to17x"]
-RichTextLabel/font_sizes/normal_font_size = 95
+RichTextLabel/font_sizes/normal_font_size = 62
 RichTextLabel/fonts/normal_font = ExtResource("8_lg0jb")
+
+[sub_resource type="Animation" id="Animation_5w8mk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.017453292]
+}
+
+[sub_resource type="Animation" id="Animation_hw7sv"]
+resource_name = "idle"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.017453292, -0.017453292]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n8w6g"]
+_data = {
+&"RESET": SubResource("Animation_5w8mk"),
+&"idle": SubResource("Animation_hw7sv")
+}
 
 [sub_resource type="Shader" id="Shader_to17x"]
 code = "shader_type canvas_item;
@@ -205,10 +284,10 @@ script = ExtResource("1_to17x")
 
 [node name="Background" type="TextureRect" parent="." unique_id=455855703]
 modulate = Color(0.14117648, 1, 1, 1)
-offset_left = -175.0
-offset_top = -695.0
-offset_right = 3942.0
-offset_bottom = 1978.0
+offset_left = -21.0
+offset_top = -401.0
+offset_right = 2248.0
+offset_bottom = 2162.0
 texture = ExtResource("2_5wo8i")
 
 [node name="OceanLayer" type="CanvasLayer" parent="." unique_id=566146352]
@@ -227,39 +306,48 @@ mouse_filter = 2
 script = ExtResource("3_ml5p0")
 
 [node name="Bouy_Line" type="Line2D" parent="Panel" unique_id=1831633514 node_paths=PackedStringArray("camera", "start_point")]
+self_modulate = Color(1, 1, 1, 0)
+material = SubResource("CanvasItemMaterial_5w8mk")
 position = Vector2(0, -73)
 points = PackedVector2Array(918, 630, 557, 421)
 width = 21.0
 width_curve = SubResource("Curve_to17x")
-default_color = Color(0.4, 0.22352941, 0.21960784, 1)
+default_color = Color(0.4, 0.22352941, 0.21960784, 0.7294118)
+gradient = SubResource("Gradient_lg0jb")
 script = ExtResource("4_jmuum")
 camera = NodePath("../../Camera2D")
 start_point = NodePath("../Panel/StartPoint")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/Bouy_Line" unique_id=590416870]
+libraries/ = SubResource("AnimationLibrary_5w8mk")
+
 [node name="Panel" type="Panel" parent="Panel" unique_id=2127569896]
 anchors_preset = -1
 anchor_left = 0.6614583
-anchor_top = 0.117000006
+anchor_top = 0.44940743
 anchor_right = 0.93500006
 anchor_bottom = 0.919
 offset_left = -53.0
-offset_top = -41.36001
+offset_top = -174.36002
 offset_right = 58.799927
-offset_bottom = 0.47998047
+offset_bottom = -132.52002
+rotation = 0.017453292
+pivot_offset = Vector2(0, -2.22)
+pivot_offset_ratio = Vector2(0.5, 0.5)
 theme = SubResource("Theme_jmuum")
 metadata/_edit_use_anchors_ = true
 
 [node name="StartPoint" type="Line2D" parent="Panel/Panel" unique_id=2008565663]
-position = Vector2(462, 453)
+position = Vector2(29, 275)
 points = PackedVector2Array(0, 0)
 round_precision = 32
 
 [node name="Icon" type="TextureRect" parent="Panel/Panel" unique_id=1015031365]
 layout_mode = 0
 offset_left = 210.0
-offset_top = -54.0
+offset_top = -140.0
 offset_right = 424.0
-offset_bottom = 160.0
+offset_bottom = 74.0
 texture = ExtResource("7_lg0jb")
 
 [node name="Title" type="RichTextLabel" parent="Panel/Panel" unique_id=1193188135]
@@ -270,11 +358,14 @@ anchor_top = 0.115
 anchor_right = 0.314
 anchor_bottom = 0.115
 offset_left = -170.018
-offset_top = 56.58
+offset_top = -4.135025
 offset_right = 412.982
-offset_bottom = 216.58
+offset_bottom = 155.86496
 theme = SubResource("Theme_to17x")
 theme_override_colors/font_outline_color = Color(0.28627452, 0.12941177, 0.043137256, 1)
+theme_override_colors/font_shadow_color = Color(0.30980393, 0, 0, 0.5882353)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = -610
 bbcode_enabled = true
 text = "[wave]Title!"
@@ -288,15 +379,22 @@ anchor_left = 0.314
 anchor_top = 0.115
 anchor_right = 0.314
 anchor_bottom = 0.115
-offset_left = -161.018
-offset_top = 206.58
-offset_right = 382.982
-offset_bottom = 698.58
+offset_left = -128.018
+offset_top = 134.86496
+offset_right = 363.982
+offset_bottom = 626.865
 theme = SubResource("Theme_to17x")
 theme_override_colors/font_outline_color = Color(0.28627452, 0.12941177, 0.043137256, 1)
-theme_override_font_sizes/normal_font_size = 46
+theme_override_colors/font_shadow_color = Color(0.30980393, 0, 0, 0.5882353)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/normal_font_size = 24
 text = "Mangroves are trees and shrubs that aren’t necessarily closely related to one another, but they do share the unique capability of growing within reach of the tides in salty soil."
 horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/Panel" unique_id=424206450]
+libraries/ = SubResource("AnimationLibrary_n8w6g")
+autoplay = &"idle"
 
 [node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("1_qvd5t")]
 position = Vector2(1218, 720)

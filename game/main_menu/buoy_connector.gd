@@ -17,3 +17,9 @@ func _process(delta: float) -> void:
 	
 	var buoy_screen_pos = camera.get_canvas_transform() * buoy_world_pos
 	set_point_position(1, buoy_screen_pos)
+
+#func gradient_fade():
+	#gradient_shift = val
+	#gradient.set_offset(1, gradient_shift) 
+	#bouy_line.gradient.offsets 
+	

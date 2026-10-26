@@ -1,8 +1,8 @@
 extends Camera2D
 
 @export var max_y_offset: float = 3000.0
-@export var max_x_offset: float = 200.0
-@export var smooth_speed: float = 10.0
+@export var max_x_offset: float = 500.0
+@export var smooth_speed: float = 100.0
 
 var initial_position: Vector2
 
