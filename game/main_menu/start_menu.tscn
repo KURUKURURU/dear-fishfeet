@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://mb0n1bnn6nms" path="res://game/main_menu/main_panel.gd" id="3_ml5p0"]
 [ext_resource type="Script" uid="uid://vxy4b0llxumr" path="res://game/main_menu/buoy_connector.gd" id="4_jmuum"]
 [ext_resource type="Script" uid="uid://qskq68k37es1" path="res://game/main_menu/buoy.gd" id="5_0r8cd"]
+[ext_resource type="Texture2D" uid="uid://cpeimhehk2bn7" path="res://icon.svg" id="7_lg0jb"]
+[ext_resource type="FontFile" uid="uid://ccf8o4cpwedkw" path="res://fonts/Beholden/Beholden-Regular.ttf" id="8_lg0jb"]
 [ext_resource type="AudioStream" uid="uid://dop3fccdrxrol" path="res://game/sfx/ocean.wav" id="10_42ss3"]
 [ext_resource type="AudioStream" uid="uid://dodh6yvgvf8ak" path="res://game/sfx/seagull.wav" id="11_to17x"]
 
@@ -21,12 +23,18 @@ shader_parameter/uv_scaling = 1.0
 shader_parameter/movement_direction = Vector2(1, 0)
 shader_parameter/movement_speed = 0.22999999485904
 
-[sub_resource type="Gradient" id="Gradient_jmuum"]
-offsets = PackedFloat32Array(0, 0.5620438)
-colors = PackedColorArray(0.6, 0.6, 0.6, 1, 1, 1, 1, 0)
+[sub_resource type="Curve" id="Curve_to17x"]
+_data = [Vector2(0, 0.9937107), 0.0, 0.0, 0, 0, Vector2(0.58522725, 0.7704402), -0.9290213, -0.9290213, 0, 0, Vector2(0.9857955, 0.1855346), -2.3983223, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42ss3"]
-bg_color = Color(0.6, 0.6, 0.6, 0.78039217)
+bg_color = Color(0.78988755, 0.7052207, 0.5254058, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.4656652, 0.16239738, 0.1602191, 1)
+border_blend = true
 corner_radius_top_left = 150
 corner_radius_top_right = 150
 corner_radius_bottom_right = 150
@@ -34,6 +42,10 @@ corner_radius_bottom_left = 150
 
 [sub_resource type="Theme" id="Theme_jmuum"]
 Panel/styles/panel = SubResource("StyleBoxFlat_42ss3")
+
+[sub_resource type="Theme" id="Theme_to17x"]
+RichTextLabel/font_sizes/normal_font_size = 95
+RichTextLabel/fonts/normal_font = ExtResource("8_lg0jb")
 
 [sub_resource type="Shader" id="Shader_to17x"]
 code = "shader_type canvas_item;
@@ -192,6 +204,7 @@ shader_parameter/draw_size = Vector2(1, 1)
 script = ExtResource("1_to17x")
 
 [node name="Background" type="TextureRect" parent="." unique_id=455855703]
+modulate = Color(0.14117648, 1, 1, 1)
 offset_left = -175.0
 offset_top = -695.0
 offset_right = 3942.0
@@ -216,15 +229,16 @@ script = ExtResource("3_ml5p0")
 [node name="Bouy_Line" type="Line2D" parent="Panel" unique_id=1831633514 node_paths=PackedStringArray("camera", "start_point")]
 position = Vector2(0, -73)
 points = PackedVector2Array(918, 630, 557, 421)
-default_color = Color(0.6, 0.6, 0.6, 1)
-gradient = SubResource("Gradient_jmuum")
+width = 21.0
+width_curve = SubResource("Curve_to17x")
+default_color = Color(0.4, 0.22352941, 0.21960784, 1)
 script = ExtResource("4_jmuum")
 camera = NodePath("../../Camera2D")
 start_point = NodePath("../Panel/StartPoint")
 
 [node name="Panel" type="Panel" parent="Panel" unique_id=2127569896]
 anchors_preset = -1
-anchor_left = 0.5
+anchor_left = 0.6614583
 anchor_top = 0.117000006
 anchor_right = 0.93500006
 anchor_bottom = 0.919
@@ -240,8 +254,52 @@ position = Vector2(462, 453)
 points = PackedVector2Array(0, 0)
 round_precision = 32
 
+[node name="Icon" type="TextureRect" parent="Panel/Panel" unique_id=1015031365]
+layout_mode = 0
+offset_left = 210.0
+offset_top = -54.0
+offset_right = 424.0
+offset_bottom = 160.0
+texture = ExtResource("7_lg0jb")
+
+[node name="Title" type="RichTextLabel" parent="Panel/Panel" unique_id=1193188135]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.314
+anchor_top = 0.115
+anchor_right = 0.314
+anchor_bottom = 0.115
+offset_left = -170.018
+offset_top = 56.58
+offset_right = 412.982
+offset_bottom = 216.58
+theme = SubResource("Theme_to17x")
+theme_override_colors/font_outline_color = Color(0.28627452, 0.12941177, 0.043137256, 1)
+theme_override_constants/outline_size = -610
+bbcode_enabled = true
+text = "[wave]Title!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Body" type="RichTextLabel" parent="Panel/Panel" unique_id=1863757388]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.314
+anchor_top = 0.115
+anchor_right = 0.314
+anchor_bottom = 0.115
+offset_left = -161.018
+offset_top = 206.58
+offset_right = 382.982
+offset_bottom = 698.58
+theme = SubResource("Theme_to17x")
+theme_override_colors/font_outline_color = Color(0.28627452, 0.12941177, 0.043137256, 1)
+theme_override_font_sizes/normal_font_size = 46
+text = "Mangroves are trees and shrubs that aren’t necessarily closely related to one another, but they do share the unique capability of growing within reach of the tides in salty soil."
+horizontal_alignment = 1
+
 [node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("1_qvd5t")]
-position = Vector2(960, 640)
+position = Vector2(1218, 720)
 position_smoothing_enabled = true
 
 [node name="1_Buoy" type="TextureButton" parent="." unique_id=584366845]

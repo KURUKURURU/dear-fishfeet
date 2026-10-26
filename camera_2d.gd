@@ -6,6 +6,8 @@ extends Camera2D
 
 var initial_position: Vector2
 
+# TODO: Bananas!
+
 func _ready() -> void:
 	initial_position = global_position
 

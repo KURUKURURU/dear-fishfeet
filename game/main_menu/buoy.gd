@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 
 func _on_mouse_entered() -> void:
 	var tween = create_tween()
-	tween.tween_property(self.material, "shader_parameter/outline_tint", Color(0.839, 0.898, 0.145, 1.0), 0.5)
+	tween.tween_property(self.material, "shader_parameter/outline_tint", Color(0.492, 0.884, 0.257, 1.0), 0.5)
 
 func _on_mouse_exited() -> void:
 	var tween = create_tween()
