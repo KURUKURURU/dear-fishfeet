@@ -4,9 +4,14 @@ extends Node2D
 @onready var panel = $Panel
 @onready var panel_title= $Panel/Panel/Layout/Title
 @onready var panel_body= $Panel/Panel/Layout/Body
+
 @onready var _1_buoy= $"1_Buoy/EndPoint"
+@onready var _1_1_buoy= $"1_1_Buoy/EndPoint"
+@onready var _1_2_buoy= $"1_2_Buoy/EndPoint"
+
 @onready var _2_buoy = $"2_Buoy/EndPoint"
 @onready var _3_buoy = $"3_Buoy/EndPoint"
+
 @onready var wave_bubble_texture: ColorRect = $Panel/Panel/WaveBubbleTexture
 @onready var water_fill: AudioStreamPlayer2D = $Panel/Panel/AcceptButtonMask/AudioStreamPlayer2D
 
@@ -30,6 +35,28 @@ func _on__buoy_level_1_preview() -> void:
 	change_panel_text("Coral Kingdom",
 	"The coral world has extreme biodiversity and can house 25% of the ocean's species.")
 	
+func _on__1_buoy_level_1_1_preview() -> void:
+	
+	if buoy_line.buoy == _1_1_buoy:
+		buoy_line.buoy = null
+		close_panel()
+		return
+		
+	buoy_line.buoy = _1_1_buoy
+	change_panel_text("Home",
+	"Your home. Your den. Your cave!!")
+	
+func _on__2_buoy_level_1_2_preview() -> void:
+	
+	if buoy_line.buoy == _1_2_buoy:
+		buoy_line.buoy = null
+		close_panel()
+		return
+		
+	buoy_line.buoy = _1_2_buoy
+	change_panel_text("Abyssal",
+	"Winter area, where you'd wear a scarf. spooky deeps.")
+	
 func _on__buoy_level_2_preview() -> void:
 	
 	if buoy_line.buoy == _2_buoy:
@@ -51,6 +78,8 @@ func _on__buoy_level_3_preview() -> void:
 	buoy_line.buoy = _3_buoy
 	change_panel_text("Abyssal",
 	"Winter area, where you'd wear a scarf. spooky deeps.")
+	
+
 
 func change_panel_text(title, body):
 	panel.show()

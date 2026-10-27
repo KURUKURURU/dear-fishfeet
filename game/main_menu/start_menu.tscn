@@ -16,7 +16,6 @@
 [ext_resource type="AudioStream" uid="uid://dmbfmdobwkxav" path="res://game/sfx/water-fill.ogg" id="11_jkx4m"]
 [ext_resource type="AudioStream" uid="uid://dodh6yvgvf8ak" path="res://game/sfx/seagull.wav" id="11_to17x"]
 [ext_resource type="Shader" uid="uid://b7nr2w54u506i" path="res://game/shaders/ring_fill_water.gdshader" id="12_n8w6g"]
-[ext_resource type="Script" uid="uid://bp32yi51aws0c" path="res://game/main_menu/rope.gd" id="14_jkx4m"]
 [ext_resource type="AudioStream" uid="uid://4sft0ls4q6ml" path="res://game/sfx/ocean_close.ogg" id="16_n8w6g"]
 [ext_resource type="AudioStream" uid="uid://dvfw34sq0tmhs" path="res://game/sfx/loading_loop.ogg" id="17_hw7sv"]
 
@@ -274,6 +273,14 @@ shader_parameter/atlas_region_pos = Vector2(0, 0)
 shader_parameter/atlas_region_size = Vector2(1, 1)
 shader_parameter/draw_size = Vector2(1, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n8w6g"]
+shader = SubResource("Shader_to17x")
+shader_parameter/outline_width = 0.054000002564999997
+shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
+shader_parameter/atlas_region_pos = Vector2(0, 0)
+shader_parameter/atlas_region_size = Vector2(1, 1)
+shader_parameter/draw_size = Vector2(1, 1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_to17x"]
 shader = ExtResource("3_kugup")
 shader_parameter/outline_width = 0.02000000095
@@ -428,30 +435,18 @@ pitch_scale = 1.66
 position = Vector2(1218, 720)
 position_smoothing_enabled = true
 
-[node name="Rope1" type="Line2D" parent="." unique_id=206026813 node_paths=PackedStringArray("start_point", "end_point")]
-position = Vector2(784, 760)
-points = PackedVector2Array(128, 192, 16, -8)
+[node name="Rope" type="Line2D" parent="." unique_id=206026813]
+position = Vector2(528, 304)
+points = PackedVector2Array(-248, 24, -48, 144, 112, 280, 336, 504, 424, 672, 520, 888, 616, 1120)
 width = 2.55
 default_color = Color(0.4392157, 0.05490196, 0.11372549, 1)
-script = ExtResource("14_jkx4m")
-start_point = NodePath("../1_Buoy/EndPoint")
-end_point = NodePath("../1_1_Buoy/EndPoint")
-
-[node name="Rope2" type="Line2D" parent="." unique_id=1465010122 node_paths=PackedStringArray("start_point", "end_point")]
-position = Vector2(912, 1064)
-points = PackedVector2Array(232, 368, -8, -112)
-width = 2.55
-default_color = Color(0.4392157, 0.05490196, 0.11372549, 1)
-script = ExtResource("14_jkx4m")
-start_point = NodePath("../1_1_Buoy/EndPoint")
-end_point = NodePath("../2_Buoy/EndPoint")
 
 [node name="1_Buoy" type="TextureButton" parent="." unique_id=584366845]
 material = SubResource("ShaderMaterial_4vmrj")
-offset_left = 287.33646
-offset_top = -667.3221
-offset_right = 815.3364
-offset_bottom = 388.67792
+offset_left = 15.999985
+offset_top = -632.0
+offset_right = 544.0
+offset_bottom = 424.0
 rotation = 0.14491531
 scale = Vector2(0.3066422, 0.3066422)
 pivot_offset = Vector2(255.42151, 959.8902)
@@ -478,10 +473,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 832.00006
-offset_top = 864.00006
-offset_right = 960.00006
-offset_bottom = 993.16254
+offset_left = 416.00006
+offset_top = 384.0
+offset_right = 544.00006
+offset_bottom = 513.1625
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.14491531
@@ -496,19 +491,51 @@ script = ExtResource("5_0r8cd")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="1_1_Buoy" unique_id=1759738418]
 libraries/ = SubResource("AnimationLibrary_7b18s")
 autoplay = &"sway"
-speed_scale = 0.7
+speed_scale = -0.155
 
 [node name="EndPoint" type="Line2D" parent="1_1_Buoy" unique_id=1700244050]
-position = Vector2(258.673, 939.5179)
+position = Vector2(64.10228, 130.60526)
+scale = Vector2(2.0598505, 2.0598505)
+points = PackedVector2Array(0, 0)
+
+[node name="1_2_Buoy" type="TextureButton" parent="." unique_id=171863062]
+material = SubResource("ShaderMaterial_n8w6g")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 568.0
+offset_top = 520.00006
+offset_right = 696.0
+offset_bottom = 649.16254
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.14491531
+scale = Vector2(0.8480726, 0.8480726)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+toggle_mode = true
+button_group = SubResource("ButtonGroup_to17x")
+texture_normal = ExtResource("7_lg0jb")
+stretch_mode = 0
+script = ExtResource("5_0r8cd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="1_2_Buoy" unique_id=1546627952]
+libraries/ = SubResource("AnimationLibrary_7b18s")
+autoplay = &"sway"
+speed_scale = 1.7
+
+[node name="EndPoint" type="Line2D" parent="1_2_Buoy" unique_id=1802865390]
+position = Vector2(62.740112, 121.27089)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
 [node name="2_Buoy" type="TextureButton" parent="." unique_id=512295179]
 material = SubResource("ShaderMaterial_to17x")
-offset_left = 526.99994
-offset_top = -195.0
-offset_right = 1055.0
-offset_bottom = 861.0
+offset_left = 600.00006
+offset_top = -143.99995
+offset_right = 1128.0001
+offset_bottom = 912.00006
 rotation = 0.14491531
 scale = Vector2(0.3066422, 0.3066422)
 pivot_offset = Vector2(255.42151, 959.8902)
@@ -583,10 +610,14 @@ autoplay = true
 [connection signal="mouse_entered" from="1_Buoy" to="1_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="1_Buoy" to="1_Buoy" method="_on_mouse_exited"]
 [connection signal="pressed" from="1_Buoy" to="1_Buoy" method="_on_pressed"]
-[connection signal="level_1_preview" from="1_1_Buoy" to="." method="_on__buoy_level_1_preview"]
+[connection signal="level_1_1_preview" from="1_1_Buoy" to="." method="_on__1_buoy_level_1_1_preview"]
 [connection signal="mouse_entered" from="1_1_Buoy" to="1_1_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="1_1_Buoy" to="1_1_Buoy" method="_on_mouse_exited"]
 [connection signal="pressed" from="1_1_Buoy" to="1_1_Buoy" method="_on_pressed"]
+[connection signal="level_1_2_preview" from="1_2_Buoy" to="." method="_on__2_buoy_level_1_2_preview"]
+[connection signal="mouse_entered" from="1_2_Buoy" to="1_2_Buoy" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="1_2_Buoy" to="1_2_Buoy" method="_on_mouse_exited"]
+[connection signal="pressed" from="1_2_Buoy" to="1_2_Buoy" method="_on_pressed"]
 [connection signal="level_2_preview" from="2_Buoy" to="." method="_on__buoy_level_2_preview"]
 [connection signal="mouse_entered" from="2_Buoy" to="2_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="2_Buoy" to="2_Buoy" method="_on_mouse_exited"]
