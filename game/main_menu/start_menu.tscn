@@ -10,12 +10,15 @@
 [ext_resource type="Script" uid="uid://mb0n1bnn6nms" path="res://game/main_menu/main_panel.gd" id="3_ml5p0"]
 [ext_resource type="Script" uid="uid://vxy4b0llxumr" path="res://game/main_menu/buoy_connector.gd" id="4_jmuum"]
 [ext_resource type="Script" uid="uid://qskq68k37es1" path="res://game/main_menu/buoy.gd" id="5_0r8cd"]
-[ext_resource type="Theme" uid="uid://dn4jhx71g15nv" path="res://game/theme/Panel.tres" id="7_5w8mk"]
 [ext_resource type="Texture2D" uid="uid://cpeimhehk2bn7" path="res://icon.svg" id="7_lg0jb"]
 [ext_resource type="FontFile" uid="uid://3i21os4h65ta" path="res://fonts/Xanmono_Font_1_0/OpenType (.otf)/Xanmono-Regular.otf" id="8_lg0jb"]
 [ext_resource type="AudioStream" uid="uid://dop3fccdrxrol" path="res://game/sfx/ocean.wav" id="10_42ss3"]
+[ext_resource type="AudioStream" uid="uid://dmbfmdobwkxav" path="res://game/sfx/water-fill.ogg" id="11_jkx4m"]
 [ext_resource type="AudioStream" uid="uid://dodh6yvgvf8ak" path="res://game/sfx/seagull.wav" id="11_to17x"]
 [ext_resource type="Shader" uid="uid://b7nr2w54u506i" path="res://game/shaders/ring_fill_water.gdshader" id="12_n8w6g"]
+[ext_resource type="Script" uid="uid://bp32yi51aws0c" path="res://game/main_menu/rope.gd" id="14_jkx4m"]
+[ext_resource type="AudioStream" uid="uid://4sft0ls4q6ml" path="res://game/sfx/ocean_close.ogg" id="16_n8w6g"]
+[ext_resource type="AudioStream" uid="uid://dvfw34sq0tmhs" path="res://game/sfx/loading_loop.ogg" id="17_hw7sv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i7avt"]
 shader = ExtResource("1_xgbe7")
@@ -32,7 +35,8 @@ _data = [Vector2(0, 0.9937107), 0.0, 0.0, 0, 0, Vector2(0.58522725, 0.7704402), 
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_lg0jb"]
-colors = PackedColorArray(0.45490196, 0.19215687, 0.18431373, 1, 0.38431373, 0.16078432, 0.15686275, 0)
+interpolation_mode = 2
+colors = PackedColorArray(0.02745098, 0.21568628, 0.2509804, 1, 0.63515395, 0.83229685, 0.2778326, 0)
 
 [sub_resource type="Animation" id="Animation_lg0jb"]
 length = 0.001
@@ -40,7 +44,7 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
@@ -56,7 +60,7 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1.4666667),
@@ -70,6 +74,19 @@ _data = {
 &"RESET": SubResource("Animation_lg0jb"),
 &"gradient_blend": SubResource("Animation_jlh6b")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rxf60"]
+shader = ExtResource("12_n8w6g")
+shader_parameter/backFillColour = Color(0.62, 1, 1, 1)
+shader_parameter/frontFillInnerColour = Color(0.35, 1, 1, 1)
+shader_parameter/frontFillOuterColour = Color(0, 0.35, 1, 1)
+shader_parameter/ringColour = Color(3.4894794e-07, 0.17798492, 0.22574607, 1)
+shader_parameter/fresnelColour = Color(0, 0.88, 1, 1)
+shader_parameter/innerRingGlowColour = Color(0.40853631, 0.62216055, 0.3744149, 1)
+shader_parameter/fillcolour = Color(1, 1, 1, 1)
+shader_parameter/ringWidth = 0.15
+shader_parameter/innerCircleRadiusOffset = 0.0
+shader_parameter/fill_value = -1.0
 
 [sub_resource type="Theme" id="Theme_to17x"]
 RichTextLabel/font_sizes/normal_font_size = 62
@@ -111,19 +128,6 @@ _data = {
 &"RESET": SubResource("Animation_5w8mk"),
 &"idle": SubResource("Animation_hw7sv")
 }
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rxf60"]
-shader = ExtResource("12_n8w6g")
-shader_parameter/backFillColour = Color(0.62, 1, 1, 1)
-shader_parameter/frontFillInnerColour = Color(0.35, 1, 1, 1)
-shader_parameter/frontFillOuterColour = Color(0, 0.35, 1, 1)
-shader_parameter/ringColour = Color(3.4894794e-07, 0.17798492, 0.22574607, 1)
-shader_parameter/fresnelColour = Color(0, 0.88, 1, 1)
-shader_parameter/innerRingGlowColour = Color(0.40853631, 0.62216055, 0.3744149, 1)
-shader_parameter/fillcolour = Color(1, 1, 1, 1)
-shader_parameter/ringWidth = 0.15
-shader_parameter/innerCircleRadiusOffset = 0.0
-shader_parameter/fill_value = -1.0
 
 [sub_resource type="Shader" id="Shader_to17x"]
 code = "shader_type canvas_item;
@@ -262,6 +266,14 @@ _data = {
 &"sway": SubResource("Animation_w20i0")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xxc8o"]
+shader = SubResource("Shader_to17x")
+shader_parameter/outline_width = 0.054000002564999997
+shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
+shader_parameter/atlas_region_pos = Vector2(0, 0)
+shader_parameter/atlas_region_size = Vector2(1, 1)
+shader_parameter/draw_size = Vector2(1, 1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_to17x"]
 shader = ExtResource("3_kugup")
 shader_parameter/outline_width = 0.02000000095
@@ -311,7 +323,6 @@ position = Vector2(0, -73)
 points = PackedVector2Array(918, 630, 557, 421)
 width = 21.0
 width_curve = SubResource("Curve_to17x")
-default_color = Color(0.4, 0.22352941, 0.21960784, 0.7294118)
 gradient = SubResource("Gradient_lg0jb")
 script = ExtResource("4_jmuum")
 camera = NodePath("../../Camera2D")
@@ -321,11 +332,12 @@ start_point = NodePath("../Panel/StartPoint")
 libraries/ = SubResource("AnimationLibrary_5w8mk")
 
 [node name="Panel" type="Panel" parent="Panel" unique_id=2127569896]
+self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
-anchor_left = 0.6614583
-anchor_top = 0.44940743
-anchor_right = 0.93500006
-anchor_bottom = 0.919
+anchor_left = 0.66122943
+anchor_top = 0.44940388
+anchor_right = 0.9347712
+anchor_bottom = 0.96562386
 offset_left = -125.0
 offset_top = -169.36002
 offset_right = -13.200073
@@ -333,11 +345,19 @@ offset_bottom = -127.52002
 rotation = 0.017453292
 pivot_offset = Vector2(0, -2.22)
 pivot_offset_ratio = Vector2(0.5, 0.5)
-theme = ExtResource("7_5w8mk")
 metadata/_edit_use_anchors_ = true
 
+[node name="WaveBubbleTexture" type="ColorRect" parent="Panel/Panel" unique_id=1634893226]
+material = SubResource("ShaderMaterial_rxf60")
+layout_mode = 0
+offset_left = -57.122
+offset_top = -101.668
+offset_right = 378.78223
+offset_bottom = 334.23636
+scale = Vector2(1.7108226, 1.7108226)
+
 [node name="StartPoint" type="Line2D" parent="Panel/Panel" unique_id=2008565663]
-position = Vector2(29, 275)
+position = Vector2(2.05, 275)
 points = PackedVector2Array(0, 0)
 round_precision = 32
 
@@ -351,10 +371,10 @@ texture = ExtResource("7_lg0jb")
 
 [node name="Layout" type="VBoxContainer" parent="Panel/Panel" unique_id=1070478512]
 layout_mode = 0
-offset_left = 39.26739
-offset_top = 60.84109
-offset_right = 605.5218
-offset_bottom = 584.83264
+offset_left = 39.267
+offset_top = 116.481
+offset_right = 605.521
+offset_bottom = 620.8828
 theme_override_constants/separation = 15
 
 [node name="Title" type="RichTextLabel" parent="Panel/Panel/Layout" unique_id=1193188135]
@@ -387,29 +407,44 @@ horizontal_alignment = 1
 libraries/ = SubResource("AnimationLibrary_n8w6g")
 autoplay = &"idle"
 
-[node name="WaveBubbleTexture" type="ColorRect" parent="Panel/Panel" unique_id=1634893226]
-material = SubResource("ShaderMaterial_rxf60")
-layout_mode = 0
-offset_left = 237.3239
-offset_top = 463.4459
-offset_right = 344.4175
-offset_bottom = 570.53955
-scale = Vector2(1.7108226, 1.7108226)
-
 [node name="Polygon2D" type="Polygon2D" parent="Panel/Panel" unique_id=1905322844]
+visible = false
 position = Vector2(-37.768177, 2.176612)
 polygon = PackedVector2Array(333.02588, 514.2663, 334.42212, 594.2541, 401.71362, 553.07336)
 
 [node name="AcceptButtonMask" type="TextureButton" parent="Panel/Panel" unique_id=427246091]
 layout_mode = 0
-offset_left = 237.32385
-offset_top = 463.4458
-offset_right = 416.99866
-offset_bottom = 642.1394
+offset_left = 37.550293
+offset_top = -5.7250977
+offset_right = 626.10535
+offset_bottom = 562.8642
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Panel/Panel/AcceptButtonMask" unique_id=88738944]
+position = Vector2(94.62649, 92.36261)
+stream = ExtResource("11_jkx4m")
+pitch_scale = 1.66
 
 [node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("1_qvd5t")]
 position = Vector2(1218, 720)
 position_smoothing_enabled = true
+
+[node name="Rope1" type="Line2D" parent="." unique_id=206026813 node_paths=PackedStringArray("start_point", "end_point")]
+position = Vector2(784, 760)
+points = PackedVector2Array(128, 192, 16, -8)
+width = 2.55
+default_color = Color(0.4392157, 0.05490196, 0.11372549, 1)
+script = ExtResource("14_jkx4m")
+start_point = NodePath("../1_Buoy/EndPoint")
+end_point = NodePath("../1_1_Buoy/EndPoint")
+
+[node name="Rope2" type="Line2D" parent="." unique_id=1465010122 node_paths=PackedStringArray("start_point", "end_point")]
+position = Vector2(912, 1064)
+points = PackedVector2Array(232, 368, -8, -112)
+width = 2.55
+default_color = Color(0.4392157, 0.05490196, 0.11372549, 1)
+script = ExtResource("14_jkx4m")
+start_point = NodePath("../1_1_Buoy/EndPoint")
+end_point = NodePath("../2_Buoy/EndPoint")
 
 [node name="1_Buoy" type="TextureButton" parent="." unique_id=584366845]
 material = SubResource("ShaderMaterial_4vmrj")
@@ -432,6 +467,38 @@ autoplay = &"sway"
 speed_scale = 0.7
 
 [node name="EndPoint" type="Line2D" parent="1_Buoy" unique_id=1814284995]
+position = Vector2(258.673, 939.5179)
+scale = Vector2(2.0598505, 2.0598505)
+points = PackedVector2Array(0, 0)
+
+[node name="1_1_Buoy" type="TextureButton" parent="." unique_id=1571601254]
+material = SubResource("ShaderMaterial_xxc8o")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 832.00006
+offset_top = 864.00006
+offset_right = 960.00006
+offset_bottom = 993.16254
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.14491531
+scale = Vector2(0.8480726, 0.8480726)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+toggle_mode = true
+button_group = SubResource("ButtonGroup_to17x")
+texture_normal = ExtResource("7_lg0jb")
+stretch_mode = 0
+script = ExtResource("5_0r8cd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="1_1_Buoy" unique_id=1759738418]
+libraries/ = SubResource("AnimationLibrary_7b18s")
+autoplay = &"sway"
+speed_scale = 0.7
+
+[node name="EndPoint" type="Line2D" parent="1_1_Buoy" unique_id=1700244050]
 position = Vector2(258.673, 939.5179)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
@@ -492,9 +559,22 @@ autoplay = true
 attenuation = 1.4142135
 panning_strength = 1.48
 
+[node name="ocean_track" type="AudioStreamPlayer2D" parent="." unique_id=646838063]
+position = Vector2(1688, 1440)
+stream = ExtResource("16_n8w6g")
+volume_db = -5.174
+autoplay = true
+panning_strength = 0.79
+
 [node name="seagulls_track" type="AudioStreamPlayer2D" parent="." unique_id=216756436]
 position = Vector2(1519, 1619)
 stream = ExtResource("11_to17x")
+autoplay = true
+
+[node name="music" type="AudioStreamPlayer" parent="." unique_id=286180138]
+stream = ExtResource("17_hw7sv")
+volume_db = 2.5
+pitch_scale = 0.95
 autoplay = true
 
 [connection signal="button_down" from="Panel/Panel/AcceptButtonMask" to="." method="_on_accept_button_mask_button_down"]
@@ -503,6 +583,10 @@ autoplay = true
 [connection signal="mouse_entered" from="1_Buoy" to="1_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="1_Buoy" to="1_Buoy" method="_on_mouse_exited"]
 [connection signal="pressed" from="1_Buoy" to="1_Buoy" method="_on_pressed"]
+[connection signal="level_1_preview" from="1_1_Buoy" to="." method="_on__buoy_level_1_preview"]
+[connection signal="mouse_entered" from="1_1_Buoy" to="1_1_Buoy" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="1_1_Buoy" to="1_1_Buoy" method="_on_mouse_exited"]
+[connection signal="pressed" from="1_1_Buoy" to="1_1_Buoy" method="_on_pressed"]
 [connection signal="level_2_preview" from="2_Buoy" to="." method="_on__buoy_level_2_preview"]
 [connection signal="mouse_entered" from="2_Buoy" to="2_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="2_Buoy" to="2_Buoy" method="_on_mouse_exited"]
