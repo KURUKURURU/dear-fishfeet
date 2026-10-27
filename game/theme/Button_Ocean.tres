@@ -1,0 +1,23 @@
+[gd_resource type="Theme" format=3 uid="uid://b1t0w88rbif4j"]
+
+[ext_resource type="FontFile" uid="uid://br2kr04nfu83g" path="res://fonts/Fibberish v1.0/fibberish.ttf" id="1_v7o2b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3f5hn"]
+bg_color = Color(0.29848903, 0.62273544, 0.9110354, 1)
+border_width_left = 8
+border_width_top = 11
+border_color = Color(0.654902, 0.8156863, 0.5529412, 0.57254905)
+border_blend = true
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+corner_detail = 15
+shadow_color = Color(0.7649292, 0, 0.58225244, 0.1764706)
+shadow_size = 2
+shadow_offset = Vector2(2.28, 8.34)
+
+[resource]
+Button/font_sizes/font_size = 84
+Button/fonts/font = ExtResource("1_v7o2b")
+Button/styles/normal = SubResource("StyleBoxFlat_3f5hn")

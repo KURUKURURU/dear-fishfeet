@@ -1,0 +1,152 @@
+[gd_scene format=3 uid="uid://cktjgsmva0lgr"]
+
+[ext_resource type="Material" uid="uid://bfdtvlrs2pudh" path="res://game/shaders/underwater_general.tres" id="1_xbk7v"]
+[ext_resource type="Texture2D" uid="uid://fdchh820n8nm" path="res://game/shader images/ocean.png" id="2_1ec5p"]
+[ext_resource type="Material" uid="uid://uqy7loh2gdev" path="res://game/shaders/shiny.tres" id="3_wvs2s"]
+[ext_resource type="PackedScene" uid="uid://bou5ii3ekbhdu" path="res://game/player/scene/camera_2d.tscn" id="4_f5phj"]
+[ext_resource type="Theme" uid="uid://b1t0w88rbif4j" path="res://game/theme/Button_Ocean.tres" id="4_wvs2s"]
+[ext_resource type="FontFile" uid="uid://pj5t7b8i4tcs" path="res://fonts/Beholden/Beholden-Bold-Italic.ttf" id="6_f5phj"]
+
+[sub_resource type="Animation" id="Animation_euthe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.041252106]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../RichTextLabel:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_v7co5"]
+resource_name = "idle"
+length = 7.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 6.866667),
+"transitions": PackedFloat32Array(1, 7.4642606),
+"update": 0,
+"values": [0.01745329251994329, -0.01745329251994329]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../RichTextLabel:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05631689, 3.54, 7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.034906585, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nnt2q"]
+_data = {
+&"RESET": SubResource("Animation_euthe"),
+&"idle": SubResource("Animation_v7co5")
+}
+
+[node name="OpeningMenu" type="Node2D" unique_id=220484335]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2071270704]
+visible = false
+
+[node name="WaterTexture" type="ColorRect" parent="CanvasLayer" unique_id=1308623584]
+material = ExtResource("1_xbk7v")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Color" type="ColorRect" parent="." unique_id=562921742]
+offset_left = -108.0
+offset_top = -70.0
+offset_right = 2034.0
+offset_bottom = 1202.0
+color = Color(0.026345907, 0.5913715, 0.75401086, 1)
+
+[node name="WaterBg" type="TextureRect" parent="." unique_id=2098856022]
+self_modulate = Color(1.2848741, 1.1846423, 0.9479811, 0.157)
+offset_left = -173.0
+offset_top = -100.0
+offset_right = 4686.573
+offset_bottom = 2782.7605
+scale = Vector2(0.45477247, 0.45477247)
+texture = ExtResource("2_1ec5p")
+stretch_mode = 1
+
+[node name="Options" type="VBoxContainer" parent="." unique_id=1274891612]
+offset_left = 137.00002
+offset_top = 441.0
+offset_right = 783.0
+offset_bottom = 1087.0
+rotation = 0.041252106
+scale = Vector2(0.7901461, 0.7901461)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_constants/separation = 41
+
+[node name="Start" type="Button" parent="Options" unique_id=1136124378]
+material = ExtResource("3_wvs2s")
+custom_minimum_size = Vector2(75, 150)
+layout_mode = 2
+theme = ExtResource("4_wvs2s")
+text = "Start"
+
+[node name="Start2" type="Button" parent="Options" unique_id=1500291054]
+material = ExtResource("3_wvs2s")
+custom_minimum_size = Vector2(75, 150)
+layout_mode = 2
+theme = ExtResource("4_wvs2s")
+text = "Settings"
+
+[node name="Start3" type="Button" parent="Options" unique_id=1257903902]
+material = ExtResource("3_wvs2s")
+custom_minimum_size = Vector2(75, 150)
+layout_mode = 2
+theme = ExtResource("4_wvs2s")
+text = "About"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Options" unique_id=1743637622]
+root_node = NodePath("../Start")
+libraries/ = SubResource("AnimationLibrary_nnt2q")
+
+[node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("4_f5phj")]
+position = Vector2(966, 638)
+max_y_offset = 50.0
+max_x_offset = 200.0
+smooth_speed = 1.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1702318794]
+offset_left = 137.0
+offset_top = 286.0
+offset_right = 1232.0
+offset_bottom = 477.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_fonts/normal_font = ExtResource("6_f5phj")
+theme_override_font_sizes/normal_font_size = 166
+text = "Dear Fish feet,"

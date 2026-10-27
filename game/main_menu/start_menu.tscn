@@ -10,10 +10,12 @@
 [ext_resource type="Script" uid="uid://mb0n1bnn6nms" path="res://game/main_menu/main_panel.gd" id="3_ml5p0"]
 [ext_resource type="Script" uid="uid://vxy4b0llxumr" path="res://game/main_menu/buoy_connector.gd" id="4_jmuum"]
 [ext_resource type="Script" uid="uid://qskq68k37es1" path="res://game/main_menu/buoy.gd" id="5_0r8cd"]
+[ext_resource type="Theme" uid="uid://dn4jhx71g15nv" path="res://game/theme/Panel.tres" id="7_5w8mk"]
 [ext_resource type="Texture2D" uid="uid://cpeimhehk2bn7" path="res://icon.svg" id="7_lg0jb"]
 [ext_resource type="FontFile" uid="uid://3i21os4h65ta" path="res://fonts/Xanmono_Font_1_0/OpenType (.otf)/Xanmono-Regular.otf" id="8_lg0jb"]
 [ext_resource type="AudioStream" uid="uid://dop3fccdrxrol" path="res://game/sfx/ocean.wav" id="10_42ss3"]
 [ext_resource type="AudioStream" uid="uid://dodh6yvgvf8ak" path="res://game/sfx/seagull.wav" id="11_to17x"]
+[ext_resource type="Shader" uid="uid://b7nr2w54u506i" path="res://game/shaders/ring_fill_water.gdshader" id="12_n8w6g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i7avt"]
 shader = ExtResource("1_xgbe7")
@@ -69,22 +71,6 @@ _data = {
 &"gradient_blend": SubResource("Animation_jlh6b")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42ss3"]
-bg_color = Color(0.78988755, 0.7052207, 0.5254058, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.4656652, 0.16239738, 0.1602191, 1)
-border_blend = true
-corner_radius_top_left = 150
-corner_radius_top_right = 150
-corner_radius_bottom_right = 150
-corner_radius_bottom_left = 150
-
-[sub_resource type="Theme" id="Theme_jmuum"]
-Panel/styles/panel = SubResource("StyleBoxFlat_42ss3")
-
 [sub_resource type="Theme" id="Theme_to17x"]
 RichTextLabel/font_sizes/normal_font_size = 62
 RichTextLabel/fonts/normal_font = ExtResource("8_lg0jb")
@@ -125,6 +111,19 @@ _data = {
 &"RESET": SubResource("Animation_5w8mk"),
 &"idle": SubResource("Animation_hw7sv")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rxf60"]
+shader = ExtResource("12_n8w6g")
+shader_parameter/backFillColour = Color(0.62, 1, 1, 1)
+shader_parameter/frontFillInnerColour = Color(0.35, 1, 1, 1)
+shader_parameter/frontFillOuterColour = Color(0, 0.35, 1, 1)
+shader_parameter/ringColour = Color(3.4894794e-07, 0.17798492, 0.22574607, 1)
+shader_parameter/fresnelColour = Color(0, 0.88, 1, 1)
+shader_parameter/innerRingGlowColour = Color(0.40853631, 0.62216055, 0.3744149, 1)
+shader_parameter/fillcolour = Color(1, 1, 1, 1)
+shader_parameter/ringWidth = 0.15
+shader_parameter/innerCircleRadiusOffset = 0.0
+shader_parameter/fill_value = -1.0
 
 [sub_resource type="Shader" id="Shader_to17x"]
 code = "shader_type canvas_item;
@@ -327,14 +326,14 @@ anchor_left = 0.6614583
 anchor_top = 0.44940743
 anchor_right = 0.93500006
 anchor_bottom = 0.919
-offset_left = -53.0
-offset_top = -174.36002
-offset_right = 58.799927
-offset_bottom = -132.52002
+offset_left = -125.0
+offset_top = -169.36002
+offset_right = -13.200073
+offset_bottom = -127.52002
 rotation = 0.017453292
 pivot_offset = Vector2(0, -2.22)
 pivot_offset_ratio = Vector2(0.5, 0.5)
-theme = SubResource("Theme_jmuum")
+theme = ExtResource("7_5w8mk")
 metadata/_edit_use_anchors_ = true
 
 [node name="StartPoint" type="Line2D" parent="Panel/Panel" unique_id=2008565663]
@@ -344,23 +343,23 @@ round_precision = 32
 
 [node name="Icon" type="TextureRect" parent="Panel/Panel" unique_id=1015031365]
 layout_mode = 0
-offset_left = 210.0
-offset_top = -140.0
-offset_right = 424.0
-offset_bottom = 74.0
+offset_left = 209.33386
+offset_top = -178.16339
+offset_right = 423.33386
+offset_bottom = 35.83661
 texture = ExtResource("7_lg0jb")
 
-[node name="Title" type="RichTextLabel" parent="Panel/Panel" unique_id=1193188135]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.314
-anchor_top = 0.115
-anchor_right = 0.314
-anchor_bottom = 0.115
-offset_left = -170.018
-offset_top = -4.135025
-offset_right = 412.982
-offset_bottom = 155.86496
+[node name="Layout" type="VBoxContainer" parent="Panel/Panel" unique_id=1070478512]
+layout_mode = 0
+offset_left = 39.26739
+offset_top = 60.84109
+offset_right = 605.5218
+offset_bottom = 584.83264
+theme_override_constants/separation = 15
+
+[node name="Title" type="RichTextLabel" parent="Panel/Panel/Layout" unique_id=1193188135]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2
 theme = SubResource("Theme_to17x")
 theme_override_colors/font_outline_color = Color(0.28627452, 0.12941177, 0.043137256, 1)
 theme_override_colors/font_shadow_color = Color(0.30980393, 0, 0, 0.5882353)
@@ -372,29 +371,41 @@ text = "[wave]Title!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Body" type="RichTextLabel" parent="Panel/Panel" unique_id=1863757388]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.314
-anchor_top = 0.115
-anchor_right = 0.314
-anchor_bottom = 0.115
-offset_left = -128.018
-offset_top = 134.86496
-offset_right = 363.982
-offset_bottom = 626.865
+[node name="Body" type="RichTextLabel" parent="Panel/Panel/Layout" unique_id=1863757388]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
 theme = SubResource("Theme_to17x")
 theme_override_colors/font_outline_color = Color(0.28627452, 0.12941177, 0.043137256, 1)
 theme_override_colors/font_shadow_color = Color(0.30980393, 0, 0, 0.5882353)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/normal_font_size = 24
-text = "Mangroves are trees and shrubs that aren’t necessarily closely related to one another, but they do share the unique capability of growing within reach of the tides in salty soil."
+theme_override_font_sizes/normal_font_size = 30
+text = "Mangroves are trees and shrubs that aren’t necessarily closely related to one another."
 horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/Panel" unique_id=424206450]
 libraries/ = SubResource("AnimationLibrary_n8w6g")
 autoplay = &"idle"
+
+[node name="WaveBubbleTexture" type="ColorRect" parent="Panel/Panel" unique_id=1634893226]
+material = SubResource("ShaderMaterial_rxf60")
+layout_mode = 0
+offset_left = 237.3239
+offset_top = 463.4459
+offset_right = 344.4175
+offset_bottom = 570.53955
+scale = Vector2(1.7108226, 1.7108226)
+
+[node name="Polygon2D" type="Polygon2D" parent="Panel/Panel" unique_id=1905322844]
+position = Vector2(-37.768177, 2.176612)
+polygon = PackedVector2Array(333.02588, 514.2663, 334.42212, 594.2541, 401.71362, 553.07336)
+
+[node name="AcceptButtonMask" type="TextureButton" parent="Panel/Panel" unique_id=427246091]
+layout_mode = 0
+offset_left = 237.32385
+offset_top = 463.4458
+offset_right = 416.99866
+offset_bottom = 642.1394
 
 [node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("1_qvd5t")]
 position = Vector2(1218, 720)
@@ -402,12 +413,12 @@ position_smoothing_enabled = true
 
 [node name="1_Buoy" type="TextureButton" parent="." unique_id=584366845]
 material = SubResource("ShaderMaterial_4vmrj")
-offset_left = 286.99997
-offset_top = -583.0
-offset_right = 815.0
-offset_bottom = 473.0
+offset_left = 287.33646
+offset_top = -667.3221
+offset_right = 815.3364
+offset_bottom = 388.67792
 rotation = 0.14491531
-scale = Vector2(0.43106195, 0.43106195)
+scale = Vector2(0.3066422, 0.3066422)
 pivot_offset = Vector2(255.42151, 959.8902)
 toggle_mode = true
 button_group = SubResource("ButtonGroup_to17x")
@@ -427,12 +438,12 @@ points = PackedVector2Array(0, 0)
 
 [node name="2_Buoy" type="TextureButton" parent="." unique_id=512295179]
 material = SubResource("ShaderMaterial_to17x")
-offset_left = 531.0
-offset_top = 69.0
-offset_right = 1059.0
-offset_bottom = 1125.0
+offset_left = 526.99994
+offset_top = -195.0
+offset_right = 1055.0
+offset_bottom = 861.0
 rotation = 0.14491531
-scale = Vector2(0.43106195, 0.43106195)
+scale = Vector2(0.3066422, 0.3066422)
 pivot_offset = Vector2(255.42151, 959.8902)
 toggle_mode = true
 button_group = SubResource("ButtonGroup_to17x")
@@ -452,12 +463,12 @@ points = PackedVector2Array(0, 0)
 
 [node name="3_Buoy" type="TextureButton" parent="." unique_id=2050325490]
 material = SubResource("ShaderMaterial_lg0jb")
-offset_left = 1204.0
-offset_top = 669.0
-offset_right = 1732.0
-offset_bottom = 1725.0
+offset_left = 887.0
+offset_top = 465.0
+offset_right = 1415.0
+offset_bottom = 1521.0
 rotation = 0.14491531
-scale = Vector2(0.43106195, 0.43106195)
+scale = Vector2(0.3066422, 0.3066422)
 pivot_offset = Vector2(255.42151, 959.8902)
 toggle_mode = true
 button_group = SubResource("ButtonGroup_to17x")
@@ -486,6 +497,8 @@ position = Vector2(1519, 1619)
 stream = ExtResource("11_to17x")
 autoplay = true
 
+[connection signal="button_down" from="Panel/Panel/AcceptButtonMask" to="." method="_on_accept_button_mask_button_down"]
+[connection signal="button_up" from="Panel/Panel/AcceptButtonMask" to="." method="_on_accept_button_mask_button_up"]
 [connection signal="level_1_preview" from="1_Buoy" to="." method="_on__buoy_level_1_preview"]
 [connection signal="mouse_entered" from="1_Buoy" to="1_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="1_Buoy" to="1_Buoy" method="_on_mouse_exited"]

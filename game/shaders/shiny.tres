@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://uqy7loh2gdev"]
+
+[ext_resource type="Shader" uid="uid://rw4ss6lteual" path="res://game/shaders/shiny.gdshader" id="1_l4ckk"]
+
+[resource]
+shader = ExtResource("1_l4ckk")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/progress = 0.55
+shader_parameter/width = 0.56500002613898
+shader_parameter/angle = 1.06800007285291
+shader_parameter/intensity = 0.118000005605
+shader_parameter/bands = 1.0
+shader_parameter/band_gap = 0.12
+shader_parameter/band_falloff = 0.45
+shader_parameter/hardness = 0.0
+shader_parameter/tail_color = Color(0, 2.859439, 4.795412, 1)
+shader_parameter/auto_speed = 0.230000010925
+shader_parameter/auto_pause = 2.000000095
