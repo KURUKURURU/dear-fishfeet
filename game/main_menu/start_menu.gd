@@ -10,7 +10,12 @@ extends Node2D
 @onready var _1_2_buoy= $"1_2_Buoy/EndPoint"
 
 @onready var _2_buoy = $"2_Buoy/EndPoint"
+@onready var _2_1_buoy= $"2_1_Buoy/EndPoint"
+@onready var _2_2_buoy= $"2_2_Buoy/EndPoint"
+
 @onready var _3_buoy = $"3_Buoy/EndPoint"
+@onready var _3_1_buoy= $"3_1_Buoy/EndPoint"
+@onready var _3_2_buoy= $"3_2_Buoy/EndPoint"
 
 @onready var wave_bubble_texture: ColorRect = $Panel/Panel/WaveBubbleTexture
 @onready var water_fill: AudioStreamPlayer2D = $Panel/Panel/AcceptButtonMask/AudioStreamPlayer2D
@@ -54,6 +59,17 @@ func _on__2_buoy_level_1_2_preview() -> void:
 		return
 		
 	buoy_line.buoy = _1_2_buoy
+	change_panel_text("Abyssal",
+	"Winter area, where you'd wear a scarf. spooky deeps.")
+
+func _on__1_buoy_level_2_1_preview() -> void:
+	
+	if buoy_line.buoy == _2_1_buoy:
+		buoy_line.buoy = null
+		close_panel()
+		return
+		
+	buoy_line.buoy = _2_1_buoy
 	change_panel_text("Abyssal",
 	"Winter area, where you'd wear a scarf. spooky deeps.")
 	

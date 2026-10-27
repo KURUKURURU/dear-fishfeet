@@ -141,7 +141,6 @@ libraries/ = SubResource("AnimationLibrary_nnt2q")
 position = Vector2(966, 638)
 max_y_offset = 50.0
 max_x_offset = 200.0
-smooth_speed = 1.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1702318794]
 offset_left = 137.0
