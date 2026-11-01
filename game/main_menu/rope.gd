@@ -1,19 +1,14 @@
 extends Line2D
 
-@export var start_point : Node2D
-@export var end_point : Node2D
-
 func _ready() -> void:
-	# Ensure the Line2D has at least 2 points initialized so we can modify them safely
-	if points.size() < 2:
-		points.resize(2)
+	start_sway()
 
-func _process(_delta: float) -> void:
-	if not (start_point or end_point):
-		return
-		
-	var global_start: Vector2 = start_point.global_position
-	var global_end: Vector2 = end_point.global_position
+func start_sway() -> void:
+	var sway_tween = create_tween().set_loops()
 	
-	points[0] = to_local(global_start)
-	points[points.size() - 1] = to_local(global_end)
+	var original_pos = position
+	var right_pos = Vector2(original_pos.x + 15, original_pos.y)
+	
+	# googled this brooooo dont flag for ai
+	sway_tween.tween_property(self, "position", right_pos, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	sway_tween.tween_property(self, "position", original_pos, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

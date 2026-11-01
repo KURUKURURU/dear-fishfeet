@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://dqmcteu7pvqfc"]
+
+[ext_resource type="Script" uid="uid://dlso2e68y2jkl" path="res://settings.gd" id="1_epgy0"]
+[ext_resource type="AudioStream" uid="uid://dvfw34sq0tmhs" path="res://game/sfx/loading_loop.ogg" id="2_h8mts"]
+
+[node name="Settings" type="Node2D" unique_id=336202121]
+script = ExtResource("1_epgy0")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=653714449]
+offset_left = 360.0
+offset_top = 160.0
+offset_right = 1328.0
+offset_bottom = 752.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=545990769]
+layout_mode = 2
+
+[node name="Volume_Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1820211828]
+layout_mode = 2
+text = "Volume"
+
+[node name="Volume" type="HSlider" parent="MarginContainer/VBoxContainer" unique_id=1082992548]
+layout_mode = 2
+max_value = 2.0
+step = 0.01
+value = 2.0
+
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer" unique_id=1874557523]
+layout_mode = 2
+
+[node name="Mute_Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=825354348]
+layout_mode = 2
+text = "Mute"
+
+[node name="Resolutions" type="OptionButton" parent="MarginContainer/VBoxContainer" unique_id=1884776416]
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "1920 x 1080"
+popup/item_0/id = 0
+popup/item_1/text = "1600 x 900"
+popup/item_1/id = 1
+popup/item_2/text = "1280 x 720"
+popup/item_2/id = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1734640306]
+stream = ExtResource("2_h8mts")
+autoplay = true
+
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/Volume" to="." method="_on_volume_value_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/CheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/Resolutions" to="." method="_on_resolutions_item_selected"]

@@ -62,17 +62,6 @@ func _on__2_buoy_level_1_2_preview() -> void:
 	change_panel_text("Abyssal",
 	"Winter area, where you'd wear a scarf. spooky deeps.")
 
-func _on__1_buoy_level_2_1_preview() -> void:
-	
-	if buoy_line.buoy == _2_1_buoy:
-		buoy_line.buoy = null
-		close_panel()
-		return
-		
-	buoy_line.buoy = _2_1_buoy
-	change_panel_text("Abyssal",
-	"Winter area, where you'd wear a scarf. spooky deeps.")
-	
 func _on__buoy_level_2_preview() -> void:
 	
 	if buoy_line.buoy == _2_buoy:
@@ -84,6 +73,28 @@ func _on__buoy_level_2_preview() -> void:
 	change_panel_text("Mangrove Meadows",
 	"Mangroves are survivors. With their roots submerged in water.")
 
+func _on__1_buoy_level_2_1_preview() -> void:
+	
+	if buoy_line.buoy == _2_1_buoy:
+		buoy_line.buoy = null
+		close_panel()
+		return
+		
+	buoy_line.buoy = _2_1_buoy
+	change_panel_text("Abyssal",
+	"Winter area, where you'd wear a scarf. spooky deeps.")
+	
+func _on__2_buoy_level_2_2_preview() -> void:
+	
+	if buoy_line.buoy == _2_2_buoy:
+		buoy_line.buoy = null
+		close_panel()
+		return
+		
+	buoy_line.buoy = _2_2_buoy
+	change_panel_text("Abyssal",
+	"Winter area, where you'd wear a scarf. spooky deeps.")
+	
 func _on__buoy_level_3_preview() -> void:
 	
 	if buoy_line.buoy == _3_buoy:
@@ -94,6 +105,31 @@ func _on__buoy_level_3_preview() -> void:
 	buoy_line.buoy = _3_buoy
 	change_panel_text("Abyssal",
 	"Winter area, where you'd wear a scarf. spooky deeps.")
+
+	
+func _on__1_buoy_level_3_1_preview() -> void:
+	
+	if buoy_line.buoy == _3_1_buoy:
+		buoy_line.buoy = null
+		close_panel()
+		return
+		
+	buoy_line.buoy = _3_1_buoy
+	change_panel_text("Abyssal",
+	"Winter area, where you'd wear a scarf. spooky deeps.")
+	
+
+func _on__2_buoy_level_3_2_preview() -> void:
+	
+	if buoy_line.buoy == _3_2_buoy:
+		buoy_line.buoy = null
+		close_panel()
+		return
+		
+	buoy_line.buoy = _3_2_buoy
+	change_panel_text("Abyssal",
+	"Winter area, where you'd wear a scarf. spooky deeps.")
+	
 	
 
 

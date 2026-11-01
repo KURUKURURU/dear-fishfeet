@@ -2,12 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://bou5ii3ekbhdu" path="res://game/player/scene/camera_2d.tscn" id="1_qvd5t"]
 [ext_resource type="Script" uid="uid://ogyt4jxe1aer" path="res://game/main_menu/start_menu.gd" id="1_to17x"]
-[ext_resource type="Shader" uid="uid://cnb4ydnrhg7je" path="res://game/ocean_texture.gdshader" id="1_xgbe7"]
 [ext_resource type="Texture2D" uid="uid://77smwlbadsw2" path="res://temporary images/startmenu_water.jpg" id="2_5wo8i"]
-[ext_resource type="Texture2D" uid="uid://fdchh820n8nm" path="res://game/shader images/ocean.png" id="2_w20i0"]
 [ext_resource type="Texture2D" uid="uid://dvhe11ksasun" path="res://temporary images/Screenshot 2026-10-25 at 3.24 Background Removed.12 PM.png" id="3_3do2o"]
+[ext_resource type="Shader" uid="uid://db1fmekc0f5rx" path="res://game/shaders/scribble.gdshader" id="3_hw7sv"]
 [ext_resource type="Shader" uid="uid://ddj4wyh3n2esa" path="res://game/main_menu/BuoyOutline.gdshader" id="3_kugup"]
 [ext_resource type="Script" uid="uid://mb0n1bnn6nms" path="res://game/main_menu/main_panel.gd" id="3_ml5p0"]
+[ext_resource type="Shader" uid="uid://dya4aas51d5yq" path="res://game/shaders/pixel_water.gdshader" id="3_n8w6g"]
+[ext_resource type="Texture2D" uid="uid://fdchh820n8nm" path="res://game/shader images/ocean.png" id="4_jkx4m"]
 [ext_resource type="Script" uid="uid://vxy4b0llxumr" path="res://game/main_menu/buoy_connector.gd" id="4_jmuum"]
 [ext_resource type="Script" uid="uid://qskq68k37es1" path="res://game/main_menu/buoy.gd" id="5_0r8cd"]
 [ext_resource type="Texture2D" uid="uid://cpeimhehk2bn7" path="res://icon.svg" id="7_lg0jb"]
@@ -16,16 +17,41 @@
 [ext_resource type="AudioStream" uid="uid://dmbfmdobwkxav" path="res://game/sfx/water-fill.ogg" id="11_jkx4m"]
 [ext_resource type="AudioStream" uid="uid://dodh6yvgvf8ak" path="res://game/sfx/seagull.wav" id="11_to17x"]
 [ext_resource type="Shader" uid="uid://b7nr2w54u506i" path="res://game/shaders/ring_fill_water.gdshader" id="12_n8w6g"]
+[ext_resource type="Script" uid="uid://bp32yi51aws0c" path="res://game/main_menu/rope.gd" id="13_xxc8o"]
 [ext_resource type="AudioStream" uid="uid://4sft0ls4q6ml" path="res://game/sfx/ocean_close.ogg" id="16_n8w6g"]
 [ext_resource type="AudioStream" uid="uid://dvfw34sq0tmhs" path="res://game/sfx/loading_loop.ogg" id="17_hw7sv"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_csd1o"]
+shader = ExtResource("3_n8w6g")
+shader_parameter/canvasitem_dimensions = Vector2(75, 100)
+shader_parameter/texture_dimensions = Vector2(50, 20)
+shader_parameter/direction = Vector2(1, 0.5)
+shader_parameter/wave_length = -0.1
+shader_parameter/wave_frequency = 0.5
+shader_parameter/intensity = 0.630000029925
+shader_parameter/horizon_line = 0.0
+shader_parameter/is_under_horizon = true
+shader_parameter/water_noise = ExtResource("2_5wo8i")
+shader_parameter/water_noise2 = ExtResource("4_jkx4m")
+shader_parameter/water_noise_scale = Vector2(1, 1)
+shader_parameter/water_noise_scale2 = Vector2(1.22, 0.58)
+shader_parameter/water_noise_mix = 1.0
+shader_parameter/highlight_color = Color(0.7935308, 1.4665865, 0.5503259, 1)
+
+[sub_resource type="Gradient" id="Gradient_hw7sv"]
+colors = PackedColorArray(0, 0.9014338, 0.9282802, 1, 0.69731086, 0.5195629, 0.8186193, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hw7sv"]
+gradient = SubResource("Gradient_hw7sv")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hw7sv"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i7avt"]
-shader = ExtResource("1_xgbe7")
-shader_parameter/NOISE_TEXTURE = ExtResource("2_w20i0")
-shader_parameter/strength = 1.60000002384192
-shader_parameter/uv_scaling = 1.0
-shader_parameter/movement_direction = Vector2(1, 0)
-shader_parameter/movement_speed = 0.22999999485904
+shader = ExtResource("3_hw7sv")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 1.0
+shader_parameter/fps = 6.0
+shader_parameter/noise = SubResource("NoiseTexture2D_hw7sv")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5w8mk"]
 
@@ -35,7 +61,8 @@ point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_lg0jb"]
 interpolation_mode = 2
-colors = PackedColorArray(0.02745098, 0.21568628, 0.2509804, 1, 0.63515395, 0.83229685, 0.2778326, 0)
+offsets = PackedFloat32Array(0, 0.13138686)
+colors = PackedColorArray(0.02745098, 0.21568628, 0.2509804, 1, 0.19215687, 0.15294118, 0.2784314, 0)
 
 [sub_resource type="Animation" id="Animation_lg0jb"]
 length = 0.001
@@ -54,7 +81,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_jlh6b"]
 resource_name = "gradient_blend"
-length = 1.4666667
+length = 0.6333333
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -62,7 +89,7 @@ tracks/0/path = NodePath(".:self_modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.4666667),
+"times": PackedFloat32Array(0, 0.53333336),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -77,15 +104,15 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rxf60"]
 shader = ExtResource("12_n8w6g")
 shader_parameter/backFillColour = Color(0.62, 1, 1, 1)
-shader_parameter/frontFillInnerColour = Color(0.35, 1, 1, 1)
+shader_parameter/frontFillInnerColour = Color(0.34901962, 0.77254903, 1, 1)
 shader_parameter/frontFillOuterColour = Color(0, 0.35, 1, 1)
-shader_parameter/ringColour = Color(3.4894794e-07, 0.17798492, 0.22574607, 1)
+shader_parameter/ringColour = Color(0, 0.16, 0.13, 1)
 shader_parameter/fresnelColour = Color(0, 0.88, 1, 1)
-shader_parameter/innerRingGlowColour = Color(0.40853631, 0.62216055, 0.3744149, 1)
-shader_parameter/fillcolour = Color(1, 1, 1, 1)
+shader_parameter/innerRingGlowColour = Color(0, 1, 1, 1)
+shader_parameter/fillcolour = Color(0, 1, 1, 1)
 shader_parameter/ringWidth = 0.15
 shader_parameter/innerCircleRadiusOffset = 0.0
-shader_parameter/fill_value = -1.0
+shader_parameter/fill_value = -0.649999983375
 
 [sub_resource type="Theme" id="Theme_to17x"]
 RichTextLabel/font_sizes/normal_font_size = 62
@@ -267,7 +294,7 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xxc8o"]
 shader = SubResource("Shader_to17x")
-shader_parameter/outline_width = 0.054000002564999997
+shader_parameter/outline_width = 0.05400000256499999
 shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
 shader_parameter/atlas_region_pos = Vector2(0, 0)
 shader_parameter/atlas_region_size = Vector2(1, 1)
@@ -275,7 +302,7 @@ shader_parameter/draw_size = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkx4m"]
 shader = SubResource("Shader_to17x")
-shader_parameter/outline_width = 0.054000002564999997
+shader_parameter/outline_width = 0.05400000256499999
 shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
 shader_parameter/atlas_region_pos = Vector2(0, 0)
 shader_parameter/atlas_region_size = Vector2(1, 1)
@@ -291,7 +318,7 @@ shader_parameter/draw_size = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gh7oq"]
 shader = SubResource("Shader_to17x")
-shader_parameter/outline_width = 0.054000002564999997
+shader_parameter/outline_width = 0.05400000256499999
 shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
 shader_parameter/atlas_region_pos = Vector2(0, 0)
 shader_parameter/atlas_region_size = Vector2(1, 1)
@@ -299,7 +326,7 @@ shader_parameter/draw_size = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0n412"]
 shader = SubResource("Shader_to17x")
-shader_parameter/outline_width = 0.054000002564999997
+shader_parameter/outline_width = 0.05400000256499999
 shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
 shader_parameter/atlas_region_pos = Vector2(0, 0)
 shader_parameter/atlas_region_size = Vector2(1, 1)
@@ -315,7 +342,7 @@ shader_parameter/draw_size = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_33byc"]
 shader = SubResource("Shader_to17x")
-shader_parameter/outline_width = 0.054000002564999997
+shader_parameter/outline_width = 0.05400000256499999
 shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
 shader_parameter/atlas_region_pos = Vector2(0, 0)
 shader_parameter/atlas_region_size = Vector2(1, 1)
@@ -323,7 +350,7 @@ shader_parameter/draw_size = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n8w6g"]
 shader = SubResource("Shader_to17x")
-shader_parameter/outline_width = 0.054000002564999997
+shader_parameter/outline_width = 0.05400000256499999
 shader_parameter/outline_tint = Color(0.83752215, 0.8961714, 0.14619577, 1)
 shader_parameter/atlas_region_pos = Vector2(0, 0)
 shader_parameter/atlas_region_size = Vector2(1, 1)
@@ -333,17 +360,30 @@ shader_parameter/draw_size = Vector2(1, 1)
 script = ExtResource("1_to17x")
 
 [node name="Background" type="TextureRect" parent="." unique_id=455855703]
-modulate = Color(0.14117648, 1, 1, 1)
+modulate = Color(0.29391363, 0.8924818, 1.1034878, 1)
 offset_left = -21.0
 offset_top = -401.0
 offset_right = 2248.0
 offset_bottom = 2162.0
 texture = ExtResource("2_5wo8i")
 
-[node name="OceanLayer" type="CanvasLayer" parent="." unique_id=566146352]
+[node name="TextureRect" type="TextureRect" parent="Background" unique_id=682579831]
+modulate = Color(1.0839148, 1.0839148, 1.0839148, 1)
+material = SubResource("ShaderMaterial_csd1o")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 256.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_hw7sv")
+
+[node name="ScribbleLayer" type="CanvasLayer" parent="." unique_id=566146352]
 visible = false
 
-[node name="ColorRect" type="ColorRect" parent="OceanLayer" unique_id=1525633029]
+[node name="ColorRect" type="ColorRect" parent="ScribbleLayer" unique_id=1525633029]
 material = SubResource("ShaderMaterial_i7avt")
 anchors_preset = 15
 anchor_right = 1.0
@@ -387,6 +427,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 metadata/_edit_use_anchors_ = true
 
 [node name="WaveBubbleTexture" type="ColorRect" parent="Panel/Panel" unique_id=1634893226]
+visible = false
 material = SubResource("ShaderMaterial_rxf60")
 layout_mode = 0
 offset_left = -57.122
@@ -396,7 +437,7 @@ offset_bottom = 334.23636
 scale = Vector2(1.7108226, 1.7108226)
 
 [node name="StartPoint" type="Line2D" parent="Panel/Panel" unique_id=2008565663]
-position = Vector2(2.05, 275)
+position = Vector2(-16.465, 369.981)
 points = PackedVector2Array(0, 0)
 round_precision = 32
 
@@ -461,6 +502,7 @@ offset_bottom = 562.8642
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Panel/Panel/AcceptButtonMask" unique_id=88738944]
 position = Vector2(94.62649, 92.36261)
 stream = ExtResource("11_jkx4m")
+volume_db = 18.109
 pitch_scale = 1.66
 
 [node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("1_qvd5t")]
@@ -476,9 +518,10 @@ max_y_offset = 1200.0
 
 [node name="Rope" type="Line2D" parent="." unique_id=206026813]
 position = Vector2(528, 304)
-points = PackedVector2Array(-248, 24, -48, 144, 112, 280, 336, 504, 424, 672, 520, 888, 616, 1120, 744, 1288, 848, 1504, 904, 1888)
+points = PackedVector2Array(-808, -568, -256, 16, -48, 144, 112, 280, 336, 504, 424, 672, 520, 888, 616, 1120, 744, 1288, 848, 1504, 904, 1888)
 width = 2.55
 default_color = Color(0.4392157, 0.05490196, 0.11372549, 1)
+script = ExtResource("13_xxc8o")
 
 [node name="1_Buoy" type="TextureButton" parent="." unique_id=584366845]
 material = SubResource("ShaderMaterial_4vmrj")
@@ -790,6 +833,7 @@ autoplay = true
 [connection signal="mouse_entered" from="2_1_Buoy" to="2_1_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="2_1_Buoy" to="2_1_Buoy" method="_on_mouse_exited"]
 [connection signal="pressed" from="2_1_Buoy" to="2_1_Buoy" method="_on_pressed"]
+[connection signal="level_2_2_preview" from="2_2_Buoy" to="." method="_on__2_buoy_level_2_2_preview"]
 [connection signal="mouse_entered" from="2_2_Buoy" to="2_2_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="2_2_Buoy" to="2_2_Buoy" method="_on_mouse_exited"]
 [connection signal="pressed" from="2_2_Buoy" to="2_2_Buoy" method="_on_pressed"]
@@ -797,9 +841,11 @@ autoplay = true
 [connection signal="mouse_entered" from="3_Buoy" to="3_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="3_Buoy" to="3_Buoy" method="_on_mouse_exited"]
 [connection signal="pressed" from="3_Buoy" to="3_Buoy" method="_on_pressed"]
+[connection signal="level_3_1_preview" from="3_1_Buoy" to="." method="_on__1_buoy_level_3_1_preview"]
 [connection signal="mouse_entered" from="3_1_Buoy" to="3_1_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="3_1_Buoy" to="3_1_Buoy" method="_on_mouse_exited"]
 [connection signal="pressed" from="3_1_Buoy" to="3_1_Buoy" method="_on_pressed"]
+[connection signal="level_3_2_preview" from="3_2_Buoy" to="." method="_on__2_buoy_level_3_2_preview"]
 [connection signal="mouse_entered" from="3_2_Buoy" to="3_2_Buoy" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="3_2_Buoy" to="3_2_Buoy" method="_on_mouse_exited"]
 [connection signal="pressed" from="3_2_Buoy" to="3_2_Buoy" method="_on_pressed"]
