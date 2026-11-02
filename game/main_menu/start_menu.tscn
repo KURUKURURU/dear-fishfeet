@@ -427,7 +427,6 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 metadata/_edit_use_anchors_ = true
 
 [node name="WaveBubbleTexture" type="ColorRect" parent="Panel/Panel" unique_id=1634893226]
-visible = false
 material = SubResource("ShaderMaterial_rxf60")
 layout_mode = 0
 offset_left = -57.122
