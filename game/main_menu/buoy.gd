@@ -31,7 +31,8 @@ func start_sway() -> void:
 
 func _on_mouse_entered() -> void:
 	var tween = create_tween()
-	tween.tween_property(self.material, "shader_parameter/outline_tint", Color(0.492, 0.884, 0.257, 1.0), 0.5)
+	if disabled: tween.tween_property(self.material, "shader_parameter/outline_tint", Color(0.49, 0.0, 0.259, 0.0), 0.5)
+	else: tween.tween_property(self.material, "shader_parameter/outline_tint", Color(0.492, 0.884, 0.257, 1.0), 0.5)
 
 func _on_mouse_exited() -> void:
 	var tween = create_tween()

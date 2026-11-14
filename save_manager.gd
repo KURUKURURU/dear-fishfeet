@@ -8,7 +8,13 @@ func _ready() -> void:
 	_load()
 
 var contents_to_save: Dictionary = {
-	"progress_bar_value" : 50.0,
+	"story_levels_unlocked" : {1.0 : true, #home? + fake/intro to running game
+								1.1 : false, # coral town
+								1.2 : false, # running activity
+								2.1 : false, # cave systems
+								2.2 : false,
+								3.1 : false,
+								3.2 : false},
 	"player_y" : 0.0,
 	"player_x" : 0.0
 	}

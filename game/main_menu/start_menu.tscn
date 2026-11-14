@@ -522,7 +522,7 @@ width = 2.55
 default_color = Color(0.4392157, 0.05490196, 0.11372549, 1)
 script = ExtResource("13_xxc8o")
 
-[node name="1_Buoy" type="TextureButton" parent="." unique_id=584366845]
+[node name="1_Buoy" type="TextureButton" parent="." unique_id=584366845 groups=["Levels"]]
 material = SubResource("ShaderMaterial_4vmrj")
 offset_left = 15.999985
 offset_top = -632.0
@@ -546,7 +546,7 @@ position = Vector2(258.673, 939.5179)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
-[node name="1_1_Buoy" type="TextureButton" parent="." unique_id=1571601254]
+[node name="1_1_Buoy" type="TextureButton" parent="." unique_id=1571601254 groups=["Levels"]]
 material = SubResource("ShaderMaterial_xxc8o")
 anchors_preset = 8
 anchor_left = 0.5
@@ -578,7 +578,7 @@ position = Vector2(64.10228, 130.60526)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
-[node name="1_2_Buoy" type="TextureButton" parent="." unique_id=171863062]
+[node name="1_2_Buoy" type="TextureButton" parent="." unique_id=171863062 groups=["Levels"]]
 material = SubResource("ShaderMaterial_jkx4m")
 anchors_preset = 8
 anchor_left = 0.5
@@ -610,7 +610,7 @@ position = Vector2(62.740112, 121.27089)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
-[node name="2_Buoy" type="TextureButton" parent="." unique_id=512295179]
+[node name="2_Buoy" type="TextureButton" parent="." unique_id=512295179 groups=["Levels"]]
 material = SubResource("ShaderMaterial_to17x")
 offset_left = 600.00006
 offset_top = -143.99995
@@ -634,7 +634,7 @@ position = Vector2(258.673, 939.5179)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
-[node name="2_1_Buoy" type="TextureButton" parent="." unique_id=1434482588]
+[node name="2_1_Buoy" type="TextureButton" parent="." unique_id=1434482588 groups=["Levels"]]
 material = SubResource("ShaderMaterial_gh7oq")
 anchors_preset = 8
 anchor_left = 0.5
@@ -666,7 +666,7 @@ position = Vector2(62.740112, 121.27089)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
-[node name="2_2_Buoy" type="TextureButton" parent="." unique_id=2036823678]
+[node name="2_2_Buoy" type="TextureButton" parent="." unique_id=2036823678 groups=["Levels"]]
 material = SubResource("ShaderMaterial_0n412")
 anchors_preset = 8
 anchor_left = 0.5
@@ -698,7 +698,7 @@ position = Vector2(62.740112, 121.27089)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
-[node name="3_Buoy" type="TextureButton" parent="." unique_id=2050325490]
+[node name="3_Buoy" type="TextureButton" parent="." unique_id=2050325490 groups=["Levels"]]
 material = SubResource("ShaderMaterial_lg0jb")
 offset_left = 887.0
 offset_top = 465.0
@@ -721,7 +721,7 @@ position = Vector2(258.673, 939.5179)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
-[node name="3_1_Buoy" type="TextureButton" parent="." unique_id=337243348]
+[node name="3_1_Buoy" type="TextureButton" parent="." unique_id=337243348 groups=["Levels"]]
 material = SubResource("ShaderMaterial_33byc")
 anchors_preset = 8
 anchor_left = 0.5
@@ -753,7 +753,7 @@ position = Vector2(62.740112, 121.27089)
 scale = Vector2(2.0598505, 2.0598505)
 points = PackedVector2Array(0, 0)
 
-[node name="3_2_Buoy" type="TextureButton" parent="." unique_id=1317186056]
+[node name="3_2_Buoy" type="TextureButton" parent="." unique_id=1317186056 groups=["Levels"]]
 material = SubResource("ShaderMaterial_n8w6g")
 anchors_preset = 8
 anchor_left = 0.5

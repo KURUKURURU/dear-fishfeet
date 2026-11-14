@@ -22,11 +22,29 @@ extends Node2D
 
 @export var level_button_group: ButtonGroup
 
+var levels : Dictionary = {}
+
 func _ready() -> void:
+	SaveManager._save()
+	levels = SaveManager.contents_to_save.story_levels_unlocked
+	
+	$"1_Buoy".disabled = false
+	$"1_1_Buoy".disabled = not levels.get("1.1")
+	$"1_2_Buoy".disabled = not levels.get("1.2")
+
+	$"2_Buoy".disabled = not levels.get("2.1")
+	$"2_1_Buoy".disabled = not levels.get("2.1")
+	$"2_2_Buoy".disabled = not levels.get("2.2")
+
+	$"3_Buoy".disabled = not levels.get("3.1")
+	$"3_1_Buoy".disabled = not levels.get("3.1")
+	$"3_2_Buoy".disabled = not levels.get("3.2")
+	
 	panel.hide()
 	
 func _process(delta: float) -> void:
-	return
+	pass
+	
 
 
 func _on__buoy_level_1_preview() -> void:
@@ -106,7 +124,6 @@ func _on__buoy_level_3_preview() -> void:
 	change_panel_text("Abyssal",
 	"Winter area, where you'd wear a scarf. spooky deeps.")
 
-	
 func _on__1_buoy_level_3_1_preview() -> void:
 	
 	if buoy_line.buoy == _3_1_buoy:
@@ -117,7 +134,6 @@ func _on__1_buoy_level_3_1_preview() -> void:
 	buoy_line.buoy = _3_1_buoy
 	change_panel_text("Abyssal",
 	"Winter area, where you'd wear a scarf. spooky deeps.")
-	
 
 func _on__2_buoy_level_3_2_preview() -> void:
 	
@@ -129,9 +145,6 @@ func _on__2_buoy_level_3_2_preview() -> void:
 	buoy_line.buoy = _3_2_buoy
 	change_panel_text("Abyssal",
 	"Winter area, where you'd wear a scarf. spooky deeps.")
-	
-	
-
 
 func change_panel_text(title, body):
 	panel.show()
@@ -144,7 +157,6 @@ func _on_accept_button_mask_button_down() -> void:
 	water_fill.play()
 	
 	tween.tween_property(wave_bubble_texture.material, "shader_parameter/fill_value", 1.0, 1.0)
-
 
 func _on_accept_button_mask_button_up() -> void:
 	var tween = create_tween()
