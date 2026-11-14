@@ -10,6 +10,7 @@ func _ready() -> void:
 	initial_position = global_position
 
 func _process(delta: float) -> void:
+	
 	var viewport_size = get_viewport_rect().size
 	var viewport_center = viewport_size / 2.0
 	var mouse_pos = get_viewport().get_mouse_position()

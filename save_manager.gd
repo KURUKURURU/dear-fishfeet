@@ -4,22 +4,29 @@ extends Node
 const save_file_name = "user://save.json"
 const default_dictionary: Dictionary = {}
 
-func save_game(data: Dictionary):
-	var save_file: FileAccess = FileAccess.open(save_file_name, FileAccess.WRITE)
-	var string_data: String = JSON.stringify(data)
-	save_file.store_line(string_data)
+func _ready() -> void:
+	_load()
+
+var contents_to_save: Dictionary = {
+	"progress_bar_value" : 50.0,
+	"player_y" : 0.0,
+	"player_x" : 0.0
+	}
+
+func _save():
+	var save_file = FileAccess.open_encrypted_with_pass(save_file_name, FileAccess.WRITE, "76357499394432")
+	save_file.store_var(contents_to_save.duplicate())
 	save_file.close()
 	
-	
 
-func load_game():
+func _load():
 	if FileAccess.file_exists(save_file_name):
-		var save_file: FileAccess = FileAccess.open(save_file_name, FileAccess.READ)
-		var json = JSON.new()
-		
-		var string_data: String = save_file.get_line()
-		json.parse(string_data)
-		var data: Dictionary = json.get_data()
+		var save_file = FileAccess.open_encrypted_with_pass(save_file_name, FileAccess.READ, "76357499394432")
+		var data = save_file.get_var()
 		save_file.close()
 		
-		return data
+		for key in contents_to_save.keys():
+			if data.has(key):
+				contents_to_save[key] = data[key]
+			
+		var save_data = data.duplicate()

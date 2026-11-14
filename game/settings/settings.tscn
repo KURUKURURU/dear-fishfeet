@@ -3,14 +3,32 @@
 [ext_resource type="Script" uid="uid://dlso2e68y2jkl" path="res://settings.gd" id="1_epgy0"]
 [ext_resource type="AudioStream" uid="uid://dvfw34sq0tmhs" path="res://game/sfx/loading_loop.ogg" id="2_h8mts"]
 
-[node name="Settings" type="Node2D" unique_id=336202121]
+[node name="Settings" type="CanvasLayer" unique_id=411195014]
+follow_viewport_enabled = true
 script = ExtResource("1_epgy0")
+
+[node name="bg_mask" type="ColorRect" parent="." unique_id=654132737]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.24921174, 0.069287166, 0.069287166, 0.4745098)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1333967643]
+offset_left = 328.0
+offset_top = 128.0
+offset_right = 1544.0
+offset_bottom = 936.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.7137255)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=653714449]
 offset_left = 360.0
 offset_top = 160.0
-offset_right = 1328.0
-offset_bottom = 752.0
+offset_right = 1520.0
+offset_bottom = 920.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=545990769]
 layout_mode = 2
@@ -42,6 +60,13 @@ popup/item_1/id = 1
 popup/item_2/text = "1280 x 720"
 popup/item_2/id = 2
 
+[node name="Close" type="Button" parent="." unique_id=1068359045]
+offset_left = 360.0
+offset_top = 832.0
+offset_right = 1520.0
+offset_bottom = 903.0
+text = "close"
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1734640306]
 stream = ExtResource("2_h8mts")
 autoplay = true
@@ -49,3 +74,4 @@ autoplay = true
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/Volume" to="." method="_on_volume_value_changed"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/Resolutions" to="." method="_on_resolutions_item_selected"]
+[connection signal="pressed" from="Close" to="." method="_on_close_pressed"]

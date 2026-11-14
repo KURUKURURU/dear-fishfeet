@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 
-const SPEED = 500.0
+var SPEED = 500.0
 const JUMP_VELOCITY = -1000.0
 const FALL_THRESHOLD = 300.0 
 const MAX_JUMPS = 2
@@ -10,6 +10,11 @@ const MAX_JUMPS = 2
 var jump_count = 0
 
 func _physics_process(delta: float) -> void:
+	
+	if Input.is_action_pressed("shift"):
+		SPEED = 900
+	else: SPEED = 500
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	else:

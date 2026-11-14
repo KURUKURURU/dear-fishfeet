@@ -14,3 +14,7 @@ func _process(delta: float) -> void:
 func _on_start_pressed() -> void:
 	Globals.next_scene = "res://game/main_menu/start_menu.tscn"
 	get_tree().change_scene_to_packed(Globals.loading_screen)
+
+
+func _on_settings_pressed() -> void:
+	Settings.show_setting()

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bb252ryx7v2io"]
+
+[ext_resource type="Script" uid="uid://gql7x4ypi453" path="res://game/sfx/scenes/sfx.gd" id="1_5rmsq"]
+[ext_resource type="AudioStream" uid="uid://4sft0ls4q6ml" path="res://game/sfx/ocean_close.ogg" id="2_aqlne"]
+[ext_resource type="AudioStream" uid="uid://dvfw34sq0tmhs" path="res://game/sfx/loading_loop.ogg" id="3_m52b3"]
+
+[node name="SFX" type="Node2D" unique_id=309778138]
+script = ExtResource("1_5rmsq")
+
+[node name="FX" type="Node2D" parent="." unique_id=1646387600]
+
+[node name="Wind" type="AudioStreamPlayer2D" parent="FX" unique_id=1786785522]
+stream = ExtResource("2_aqlne")
+
+[node name="Music" type="Node2D" parent="." unique_id=1594344119]
+
+[node name="Song" type="AudioStreamPlayer2D" parent="Music" unique_id=1942499201]
+stream = ExtResource("3_m52b3")
+volume_db = -34.849

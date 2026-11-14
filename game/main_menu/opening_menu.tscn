@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cktjgsmva0lgr"]
 
 [ext_resource type="Script" uid="uid://dgr5eyufe4hl5" path="res://game/main_menu/opening_menu.gd" id="1_f5phj"]
-[ext_resource type="Material" uid="uid://bfdtvlrs2pudh" path="res://game/shaders/underwater_general.tres" id="1_xbk7v"]
 [ext_resource type="Texture2D" uid="uid://fdchh820n8nm" path="res://game/shader images/ocean.png" id="2_1ec5p"]
 [ext_resource type="Material" uid="uid://uqy7loh2gdev" path="res://game/shaders/shiny.tres" id="3_wvs2s"]
 [ext_resource type="PackedScene" uid="uid://bou5ii3ekbhdu" path="res://game/player/scene/camera_2d.tscn" id="4_f5phj"]
@@ -73,18 +72,6 @@ _data = {
 [node name="OpeningMenu" type="Node2D" unique_id=220484335]
 script = ExtResource("1_f5phj")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2071270704]
-visible = false
-
-[node name="WaterTexture" type="ColorRect" parent="CanvasLayer" unique_id=1308623584]
-material = ExtResource("1_xbk7v")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
 [node name="Color" type="ColorRect" parent="." unique_id=562921742]
 offset_left = -108.0
 offset_top = -70.0
@@ -119,14 +106,14 @@ layout_mode = 2
 theme = ExtResource("4_wvs2s")
 text = "Start"
 
-[node name="Start2" type="Button" parent="Options" unique_id=1500291054]
+[node name="Settings" type="Button" parent="Options" unique_id=1500291054]
 material = ExtResource("3_wvs2s")
 custom_minimum_size = Vector2(75, 150)
 layout_mode = 2
 theme = ExtResource("4_wvs2s")
 text = "Settings"
 
-[node name="Start3" type="Button" parent="Options" unique_id=1257903902]
+[node name="About" type="Button" parent="Options" unique_id=1257903902]
 material = ExtResource("3_wvs2s")
 custom_minimum_size = Vector2(75, 150)
 layout_mode = 2
@@ -153,3 +140,4 @@ theme_override_font_sizes/normal_font_size = 166
 text = "Dear Fish feet,"
 
 [connection signal="pressed" from="Options/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Options/Settings" to="." method="_on_settings_pressed"]
