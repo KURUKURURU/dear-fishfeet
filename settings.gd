@@ -34,7 +34,7 @@ func _on_button_group_pressed(button: BaseButton) -> void:
 	if active_button:
 		print("currently active: ", active_button.text)
 
-func show_setting():
+func open():
 	show()
 
 func _on_volume_value_changed(value: float) -> void:

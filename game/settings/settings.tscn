@@ -5,11 +5,11 @@
 [ext_resource type="ButtonGroup" uid="uid://c1mov4gfckacl" path="res://game/settings/settings_button_group.tres" id="3_ng7nq"]
 
 [node name="Settings" type="CanvasLayer" unique_id=411195014]
-follow_viewport_enabled = true
 script = ExtResource("1_epgy0")
 button_group = ExtResource("3_ng7nq")
 
 [node name="bg_mask" type="ColorRect" parent="." unique_id=654132737]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

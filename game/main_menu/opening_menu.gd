@@ -17,4 +17,4 @@ func _on_start_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
-	Settings.show_setting()
+	Settings.open()

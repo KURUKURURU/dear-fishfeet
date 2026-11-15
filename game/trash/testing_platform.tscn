@@ -113,10 +113,10 @@ scale = Vector2(3.1384072, 3.1384072)
 tile_set = SubResource("TileSet_rxf60")
 
 [node name="Player" parent="." unique_id=1428630364 instance=ExtResource("1_fx2te")]
-position = Vector2(5909, 375)
+position = Vector2(956, 521)
 
 [node name="player_camera" parent="." unique_id=933930917 node_paths=PackedStringArray("player") instance=ExtResource("3_3ry2a")]
-position = Vector2(5909, 375)
+position = Vector2(949, 521)
 max_y_offset = 100.0
 max_x_offset = 100.0
 smooth_speed = 2.0

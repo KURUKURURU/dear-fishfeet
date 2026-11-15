@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://c2i1ix65p5c0q"]
+
+[ext_resource type="Script" uid="uid://cwlec0xlacn8g" path="res://game/PauseMenu/scene/pause_menu.gd" id="1_cu6of"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=254117381]
+script = ExtResource("1_cu6of")
+
+[node name="Panel" type="Panel" parent="." unique_id=1270560943]
+offset_left = 712.0
+offset_top = 192.0
+offset_right = 1216.0
+offset_bottom = 920.0
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1370022789]
+offset_left = 762.0
+offset_top = 246.0
+offset_right = 1175.0
+offset_bottom = 872.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1301492998]
+layout_mode = 2
+alignment = 1
+
+[node name="Continue" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1278789970]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Continue"
+
+[node name="Saves" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1401094459]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Saves
+"
+
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer" unique_id=657984859]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Settings"
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1324184643]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Exit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
