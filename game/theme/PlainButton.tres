@@ -11,17 +11,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oiv1f"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l0myi"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.5254902, 0, 0, 0.15686275)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cftek"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_homt8"]
 content_margin_left = 4.0
@@ -51,12 +41,12 @@ bg_color = Color(0.96862745, 0.7372549, 0.69411767, 0.44313726)
 
 [resource]
 Button/colors/font_color = Color(0.9798239, 0.56172365, 0.44034007, 1)
-Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
-Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
-Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
-Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
-Button/colors/font_outline_color = Color(0.6039216, 0.4627451, 0.34901962, 1)
-Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(0.5921569, 0.4627451, 0.6627451, 1)
+Button/colors/font_hover_color = Color(0.38039216, 0.3019608, 0.78431374, 1)
+Button/colors/font_hover_pressed_color = Color(0.38039216, 0.3019608, 0.78431374, 1)
+Button/colors/font_outline_color = Color(0.98039216, 0.56078434, 0.4392157, 1)
+Button/colors/font_pressed_color = Color(0.38039216, 0.3019608, 0.78431374, 1)
 Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
 Button/colors/icon_focus_color = Color(1, 1, 1, 1)
 Button/colors/icon_hover_color = Color(1, 1, 1, 1)
@@ -66,13 +56,15 @@ Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
 Button/constants/align_to_largest_stylebox = 0
 Button/constants/h_separation = 4
 Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
 Button/font_sizes/font_size = 16
 Button/fonts/font = ExtResource("1_l0myi")
 Button/styles/disabled = SubResource("StyleBoxEmpty_homt8")
+Button/styles/disabled_mirrored = SubResource("StyleBoxEmpty_homt8")
 Button/styles/focus = SubResource("StyleBoxEmpty_l0myi")
 Button/styles/hover = SubResource("StyleBoxEmpty_1m0sg")
 Button/styles/normal = SubResource("StyleBoxEmpty_oiv1f")
-Button/styles/pressed = SubResource("StyleBoxFlat_l0myi")
+Button/styles/pressed = SubResource("StyleBoxEmpty_cftek")
 Label/colors/font_color = Color(0.98039216, 0.56078434, 0.4392157, 1)
 Label/colors/font_outline_color = Color(0.6039216, 0.4627451, 0.34901962, 1)
 Label/constants/line_spacing = 3

@@ -1,3 +1,19 @@
 [gd_scene format=3 uid="uid://b2hxbdi643sxw"]
 
+[ext_resource type="Script" uid="uid://bs5qg7uqn0d1w" path="res://game/UI/scene/ui.gd" id="1_squ3k"]
+[ext_resource type="AudioStream" uid="uid://bv4cxw3dja5uy" path="res://game/sfx/friendly_click.wav" id="2_ukh3k"]
+[ext_resource type="AudioStream" uid="uid://dwsr7hhpso8p5" path="res://game/sfx/click_quick.wav" id="3_bgjw8"]
+
 [node name="UI" type="CanvasLayer" unique_id=1919077788]
+script = ExtResource("1_squ3k")
+
+[node name="ButtonSFX" type="AudioStreamPlayer" parent="." unique_id=641698160]
+stream = ExtResource("2_ukh3k")
+volume_db = -20.0
+playback_type = 1
+
+[node name="FocusButtonSFX" type="AudioStreamPlayer" parent="." unique_id=1647703249]
+stream = ExtResource("3_bgjw8")
+volume_db = -19.171
+pitch_scale = 1.35
+playback_type = 1

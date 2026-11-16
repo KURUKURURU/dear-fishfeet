@@ -4,12 +4,13 @@
 [ext_resource type="Shader" uid="uid://cp440cn3ywou3" path="res://game/shaders/underwater_general.gdshader" id="2_wvs2s"]
 [ext_resource type="Texture2D" uid="uid://bfqf3faur1702" path="res://game/main_menu/img/main1.png" id="3_f5phj"]
 [ext_resource type="Material" uid="uid://uqy7loh2gdev" path="res://game/shaders/shiny.tres" id="3_wvs2s"]
-[ext_resource type="PackedScene" uid="uid://bou5ii3ekbhdu" path="res://game/player/scene/camera_2d.tscn" id="4_f5phj"]
 [ext_resource type="Theme" uid="uid://bmg6oq458mj52" path="res://game/theme/PlainButton.tres" id="5_euthe"]
 [ext_resource type="Shader" uid="uid://cnb4ydnrhg7je" path="res://game/ocean_texture.gdshader" id="6_f5phj"]
 [ext_resource type="Shader" uid="uid://ddj4wyh3n2esa" path="res://game/main_menu/BuoyOutline.gdshader" id="6_nnt2q"]
 [ext_resource type="Texture2D" uid="uid://b2jt7wdb32avo" path="res://game/main_menu/img/stamp link.png" id="7_ed7wi"]
 [ext_resource type="Script" uid="uid://wkq433n276bt" path="res://game/main_menu/simple_hover.gd" id="8_d33c0"]
+[ext_resource type="FontFile" uid="uid://b1sbds0pd4gao" path="res://fonts/veteran-typewriter/veteran typewriter.ttf" id="10_nnt2q"]
+[ext_resource type="AudioStream" uid="uid://b5eqqa27l0vm4" path="res://game/sfx/button.wav" id="11_ed7wi"]
 
 [sub_resource type="Animation" id="Animation_euthe"]
 length = 0.001
@@ -39,7 +40,7 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kk3cj"]
 shader = ExtResource("2_wvs2s")
-shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/bg_color = Color(1.0129894, 1.4902577, 1.9837048, 1)
 shader_parameter/uv_scale = 2.80000004172336
 shader_parameter/percentage = 1.0
 shader_parameter/speed = 1.0
@@ -50,14 +51,14 @@ shader_parameter/wave_2_freq = 1.0
 shader_parameter/wave_1_amp = 0.015
 shader_parameter/wave_2_amp = 0.01
 shader_parameter/sun_dir = Vector3(-0.2, 0.4, 1)
-shader_parameter/water_colour = Color(0.101960786, 0.16862746, 0.3254902, 1)
-shader_parameter/foam_colour = Color(0.38039216, 0.21568628, 0.9490196, 1)
-shader_parameter/sky_colour = Color(0.2517552, 0.2517552, 0.2517552, 1)
-shader_parameter/specular_colour = Color(0.7490196, 0.6627451, 0.5803922, 1)
+shader_parameter/water_colour = Color(0.101960786, 0.16862746, 0.3254902, 0.4745098)
+shader_parameter/foam_colour = Color(0.38039216, 0.21568628, 0.9490196, 0.44313726)
+shader_parameter/sky_colour = Color(0.2509804, 0.2509804, 0.2509804, 0.45882353)
+shader_parameter/specular_colour = Color(0.7490196, 0.6627451, 0.5803922, 0.23529412)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rxf60"]
 shader = ExtResource("6_nnt2q")
-shader_parameter/outline_width = 0.014000000665
+shader_parameter/outline_width = 0.0010000000475
 shader_parameter/outline_tint = Color(1, 0.05882353, 0.21176471, 1)
 shader_parameter/atlas_region_pos = Vector2(0, 0)
 shader_parameter/atlas_region_size = Vector2(1, 1)
@@ -85,64 +86,79 @@ offset_left = -108.0
 offset_top = -70.0
 offset_right = 2034.0
 offset_bottom = 1202.0
-color = Color(0.0052067605, 0.27245855, 0.3538356, 1)
+color = Color(0.24675071, 0.20066205, 0.6457795, 1)
 
 [node name="Color2" type="ColorRect" parent="." unique_id=148324641]
+visible = false
 material = SubResource("ShaderMaterial_kk3cj")
 offset_left = -108.0
 offset_top = -70.0
 offset_right = 2034.0
 offset_bottom = 1202.0
 
-[node name="WaterBg" type="TextureRect" parent="." unique_id=2098856022]
+[node name="Postcard" type="TextureRect" parent="." unique_id=2098856022]
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("3_f5phj")
 
-[node name="Start" type="Button" parent="." unique_id=1136124378]
+[node name="SideText" type="RichTextLabel" parent="." unique_id=2120969372]
+offset_left = 1002.00006
+offset_top = 132.00003
+offset_right = 1838.1227
+offset_bottom = 188.00003
+rotation = 1.5715958
+theme = ExtResource("5_euthe")
+theme_override_colors/default_color = Color(0.27058825, 0.36862746, 0.6627451, 0.7921569)
+theme_override_fonts/normal_font = ExtResource("10_nnt2q")
+theme_override_font_sizes/normal_font_size = 30
+text = "Fish without fin, a story with no fin. Est 2026 Nov 16th. "
+
+[node name="Start" type="Button" parent="." unique_id=1136124378 groups=["Button"]]
 material = ExtResource("3_wvs2s")
 custom_minimum_size = Vector2(75, 150)
-offset_left = 1183.0
-offset_top = 464.0
-offset_right = 1829.0
-offset_bottom = 614.0
+offset_left = 1168.0
+offset_top = 459.0
+offset_right = 1508.0
+offset_bottom = 609.0
 theme = ExtResource("5_euthe")
 theme_override_colors/font_color = Color(0.1764706, 0.34117648, 0.49411765, 1)
 theme_override_font_sizes/font_size = 68
 text = "Start"
 alignment = 0
 
-[node name="Settings" type="Button" parent="." unique_id=1500291054]
+[node name="Settings" type="Button" parent="." unique_id=1500291054 groups=["Button"]]
 material = ExtResource("3_wvs2s")
 custom_minimum_size = Vector2(75, 150)
-offset_left = 1183.0
-offset_top = 577.0
-offset_right = 1829.0
-offset_bottom = 727.0
+offset_left = 1168.0
+offset_top = 572.0
+offset_right = 1539.0
+offset_bottom = 722.0
 theme = ExtResource("5_euthe")
 theme_override_colors/font_color = Color(0.1764706, 0.34117648, 0.49411765, 1)
 theme_override_font_sizes/font_size = 68
 text = "Settings"
 alignment = 0
 
-[node name="About" type="Button" parent="." unique_id=1257903902]
+[node name="About" type="Button" parent="." unique_id=1257903902 groups=["Button"]]
 material = ExtResource("3_wvs2s")
 custom_minimum_size = Vector2(75, 150)
-offset_left = 1183.0
-offset_top = 683.0
-offset_right = 1829.0
-offset_bottom = 833.0
+offset_left = 1168.0
+offset_top = 685.0
+offset_right = 1352.0
+offset_bottom = 835.0
 theme = ExtResource("5_euthe")
 theme_override_colors/font_color = Color(0.1764706, 0.34117648, 0.49411765, 1)
 theme_override_font_sizes/font_size = 68
 text = "About"
 alignment = 0
 
-[node name="Link" type="LinkButton" parent="." unique_id=1900429353]
+[node name="Link" type="LinkButton" parent="." unique_id=1900429353 groups=["Button"]]
 offset_left = 1605.0
 offset_top = 40.0
-offset_right = 1883.0
-offset_bottom = 362.0
+offset_right = 3525.0
+offset_bottom = 1120.0
+underline = 2
+uri = "https://minisoda-media.itch.io/"
 
 [node name="TextureRect" type="TextureRect" parent="Link" unique_id=1450232302]
 material = SubResource("ShaderMaterial_rxf60")
@@ -154,6 +170,7 @@ texture = ExtResource("7_ed7wi")
 script = ExtResource("8_d33c0")
 
 [node name="Color3" type="ColorRect" parent="." unique_id=1731029933]
+visible = false
 material = SubResource("ShaderMaterial_wvs2s")
 offset_left = -108.0
 offset_top = -70.0
@@ -161,10 +178,16 @@ offset_right = 2034.0
 offset_bottom = 1202.0
 mouse_filter = 2
 
-[node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("4_f5phj")]
-position = Vector2(966, 638)
-max_y_offset = 50.0
-max_x_offset = 50.0
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1375118169]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." unique_id=22568350]
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1662123565]
+
+[node name="Theme" type="AudioStreamPlayer" parent="." unique_id=1160132779]
+
+[node name="Button" type="AudioStreamPlayer" parent="." unique_id=1184587495]
+stream = ExtResource("11_ed7wi")
 
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]
