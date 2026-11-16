@@ -32,21 +32,45 @@ offset_bottom = 869.0
 [node name="General" type="VBoxContainer" parent="MarginContainer" unique_id=133013010]
 layout_mode = 2
 
-[node name="Viewport" type="VBoxContainer" parent="MarginContainer" unique_id=2085309425]
-layout_mode = 2
-
-[node name="CustomVolume" type="HBoxContainer" parent="MarginContainer/Viewport" unique_id=1259879850]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/General" unique_id=1667053279]
 layout_mode = 2
 theme_override_constants/separation = 54
 alignment = 1
 
-[node name="Resolutions_Label" type="Label" parent="MarginContainer/Viewport/CustomVolume" unique_id=1149890230]
+[node name="Resolutions_Label" type="Label" parent="MarginContainer/General/HBoxContainer" unique_id=1338118037]
+layout_mode = 2
+theme = ExtResource("6_kwjb8")
+theme_override_font_sizes/font_size = 78
+text = "Keybinds"
+
+[node name="Resolutions" type="OptionButton" parent="MarginContainer/General/HBoxContainer" unique_id=148034415]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme = ExtResource("6_kwjb8")
+item_count = 3
+popup/item_0/text = "1920 x 1080"
+popup/item_0/id = 0
+popup/item_1/text = "1600 x 900"
+popup/item_1/id = 1
+popup/item_2/text = "1280 x 720"
+popup/item_2/id = 2
+
+[node name="Viewport" type="VBoxContainer" parent="MarginContainer" unique_id=2085309425]
+visible = false
+layout_mode = 2
+
+[node name="Resolution" type="HBoxContainer" parent="MarginContainer/Viewport" unique_id=1259879850]
+layout_mode = 2
+theme_override_constants/separation = 54
+alignment = 1
+
+[node name="Resolutions_Label" type="Label" parent="MarginContainer/Viewport/Resolution" unique_id=1149890230]
 layout_mode = 2
 theme = ExtResource("6_kwjb8")
 theme_override_font_sizes/font_size = 78
 text = "Resolution"
 
-[node name="Resolutions" type="OptionButton" parent="MarginContainer/Viewport/CustomVolume" unique_id=2012902748]
+[node name="Resolutions" type="OptionButton" parent="MarginContainer/Viewport/Resolution" unique_id=2012902748]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme = ExtResource("6_kwjb8")
@@ -59,6 +83,7 @@ popup/item_2/text = "1280 x 720"
 popup/item_2/id = 2
 
 [node name="Audio" type="VBoxContainer" parent="MarginContainer" unique_id=545990769]
+visible = false
 layout_mode = 2
 
 [node name="CustomVolume" type="HBoxContainer" parent="MarginContainer/Audio" unique_id=1614541049]
@@ -105,6 +130,8 @@ offset_left = 171.0
 offset_top = 832.0
 offset_right = 585.0
 offset_bottom = 960.0
+theme = ExtResource("6_kwjb8")
+theme_override_font_sizes/font_size = 87
 text = "close"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1734640306]
@@ -151,7 +178,7 @@ toggle_mode = true
 button_group = ExtResource("3_ng7nq")
 text = "Other"
 
-[connection signal="item_selected" from="MarginContainer/Viewport/CustomVolume/Resolutions" to="." method="_on_resolutions_item_selected"]
+[connection signal="item_selected" from="MarginContainer/Viewport/Resolution/Resolutions" to="." method="_on_resolutions_item_selected"]
 [connection signal="value_changed" from="MarginContainer/Audio/CustomVolume/Volume" to="." method="_on_volume_value_changed"]
 [connection signal="toggled" from="MarginContainer/Audio/Mute/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="Close" to="." method="_on_close_pressed"]

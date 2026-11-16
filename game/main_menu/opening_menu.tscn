@@ -1,38 +1,18 @@
 [gd_scene format=3 uid="uid://cktjgsmva0lgr"]
 
 [ext_resource type="Script" uid="uid://dgr5eyufe4hl5" path="res://game/main_menu/opening_menu.gd" id="1_f5phj"]
-[ext_resource type="Texture2D" uid="uid://fdchh820n8nm" path="res://game/shader images/ocean.png" id="2_1ec5p"]
+[ext_resource type="Shader" uid="uid://cp440cn3ywou3" path="res://game/shaders/underwater_general.gdshader" id="2_wvs2s"]
+[ext_resource type="Texture2D" uid="uid://bfqf3faur1702" path="res://game/main_menu/img/main1.png" id="3_f5phj"]
 [ext_resource type="Material" uid="uid://uqy7loh2gdev" path="res://game/shaders/shiny.tres" id="3_wvs2s"]
 [ext_resource type="PackedScene" uid="uid://bou5ii3ekbhdu" path="res://game/player/scene/camera_2d.tscn" id="4_f5phj"]
-[ext_resource type="Theme" uid="uid://b1t0w88rbif4j" path="res://game/theme/Button_Ocean.tres" id="4_wvs2s"]
-[ext_resource type="FontFile" uid="uid://pj5t7b8i4tcs" path="res://fonts/Beholden/Beholden-Bold-Italic.ttf" id="6_f5phj"]
+[ext_resource type="Theme" uid="uid://bmg6oq458mj52" path="res://game/theme/PlainButton.tres" id="5_euthe"]
+[ext_resource type="Shader" uid="uid://cnb4ydnrhg7je" path="res://game/ocean_texture.gdshader" id="6_f5phj"]
+[ext_resource type="Shader" uid="uid://ddj4wyh3n2esa" path="res://game/main_menu/BuoyOutline.gdshader" id="6_nnt2q"]
+[ext_resource type="Texture2D" uid="uid://b2jt7wdb32avo" path="res://game/main_menu/img/stamp link.png" id="7_ed7wi"]
+[ext_resource type="Script" uid="uid://wkq433n276bt" path="res://game/main_menu/simple_hover.gd" id="8_d33c0"]
 
 [sub_resource type="Animation" id="Animation_euthe"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.041252106]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../../RichTextLabel:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
 
 [sub_resource type="Animation" id="Animation_v7co5"]
 resource_name = "idle"
@@ -50,18 +30,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.01745329251994329, -0.01745329251994329]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../../RichTextLabel:rotation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.05631689, 3.54, 7),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 0.034906585, 0.0]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nnt2q"]
 _data = {
@@ -69,75 +37,136 @@ _data = {
 &"idle": SubResource("Animation_v7co5")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kk3cj"]
+shader = ExtResource("2_wvs2s")
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/uv_scale = 2.80000004172336
+shader_parameter/percentage = 1.0
+shader_parameter/speed = 1.0
+shader_parameter/wave_1_speed = -1.0
+shader_parameter/wave_2_speed = 1.0
+shader_parameter/wave_1_freq = 1.2
+shader_parameter/wave_2_freq = 1.0
+shader_parameter/wave_1_amp = 0.015
+shader_parameter/wave_2_amp = 0.01
+shader_parameter/sun_dir = Vector3(-0.2, 0.4, 1)
+shader_parameter/water_colour = Color(0.101960786, 0.16862746, 0.3254902, 1)
+shader_parameter/foam_colour = Color(0.38039216, 0.21568628, 0.9490196, 1)
+shader_parameter/sky_colour = Color(0.2517552, 0.2517552, 0.2517552, 1)
+shader_parameter/specular_colour = Color(0.7490196, 0.6627451, 0.5803922, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rxf60"]
+shader = ExtResource("6_nnt2q")
+shader_parameter/outline_width = 0.014000000665
+shader_parameter/outline_tint = Color(1, 0.05882353, 0.21176471, 1)
+shader_parameter/atlas_region_pos = Vector2(0, 0)
+shader_parameter/atlas_region_size = Vector2(1, 1)
+shader_parameter/draw_size = Vector2(1, 1)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_f5phj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wvs2s"]
+shader = ExtResource("6_f5phj")
+shader_parameter/NOISE_TEXTURE = SubResource("NoiseTexture2D_f5phj")
+shader_parameter/strength = 2.30000003427276
+shader_parameter/uv_scaling = 1.0
+shader_parameter/movement_direction = Vector2(10, 5)
+shader_parameter/movement_speed = 0.1
+
 [node name="OpeningMenu" type="Node2D" unique_id=220484335]
 script = ExtResource("1_f5phj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1743637622]
+root_node = NodePath("../Start")
+libraries/ = SubResource("AnimationLibrary_nnt2q")
 
 [node name="Color" type="ColorRect" parent="." unique_id=562921742]
 offset_left = -108.0
 offset_top = -70.0
 offset_right = 2034.0
 offset_bottom = 1202.0
-color = Color(0.026345907, 0.5913715, 0.75401086, 1)
+color = Color(0.0052067605, 0.27245855, 0.3538356, 1)
+
+[node name="Color2" type="ColorRect" parent="." unique_id=148324641]
+material = SubResource("ShaderMaterial_kk3cj")
+offset_left = -108.0
+offset_top = -70.0
+offset_right = 2034.0
+offset_bottom = 1202.0
 
 [node name="WaterBg" type="TextureRect" parent="." unique_id=2098856022]
-self_modulate = Color(1.2848741, 1.1846423, 0.9479811, 0.157)
-offset_left = -173.0
-offset_top = -100.0
-offset_right = 4686.573
-offset_bottom = 2782.7605
-scale = Vector2(0.45477247, 0.45477247)
-texture = ExtResource("2_1ec5p")
-stretch_mode = 1
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_f5phj")
 
-[node name="Options" type="VBoxContainer" parent="." unique_id=1274891612]
-offset_left = 137.00002
-offset_top = 441.0
-offset_right = 783.0
-offset_bottom = 1087.0
-rotation = 0.041252106
-scale = Vector2(0.7901461, 0.7901461)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-theme_override_constants/separation = 41
-
-[node name="Start" type="Button" parent="Options" unique_id=1136124378]
+[node name="Start" type="Button" parent="." unique_id=1136124378]
 material = ExtResource("3_wvs2s")
 custom_minimum_size = Vector2(75, 150)
-layout_mode = 2
-theme = ExtResource("4_wvs2s")
+offset_left = 1183.0
+offset_top = 464.0
+offset_right = 1829.0
+offset_bottom = 614.0
+theme = ExtResource("5_euthe")
+theme_override_colors/font_color = Color(0.1764706, 0.34117648, 0.49411765, 1)
+theme_override_font_sizes/font_size = 68
 text = "Start"
+alignment = 0
 
-[node name="Settings" type="Button" parent="Options" unique_id=1500291054]
+[node name="Settings" type="Button" parent="." unique_id=1500291054]
 material = ExtResource("3_wvs2s")
 custom_minimum_size = Vector2(75, 150)
-layout_mode = 2
-theme = ExtResource("4_wvs2s")
+offset_left = 1183.0
+offset_top = 577.0
+offset_right = 1829.0
+offset_bottom = 727.0
+theme = ExtResource("5_euthe")
+theme_override_colors/font_color = Color(0.1764706, 0.34117648, 0.49411765, 1)
+theme_override_font_sizes/font_size = 68
 text = "Settings"
+alignment = 0
 
-[node name="About" type="Button" parent="Options" unique_id=1257903902]
+[node name="About" type="Button" parent="." unique_id=1257903902]
 material = ExtResource("3_wvs2s")
 custom_minimum_size = Vector2(75, 150)
-layout_mode = 2
-theme = ExtResource("4_wvs2s")
+offset_left = 1183.0
+offset_top = 683.0
+offset_right = 1829.0
+offset_bottom = 833.0
+theme = ExtResource("5_euthe")
+theme_override_colors/font_color = Color(0.1764706, 0.34117648, 0.49411765, 1)
+theme_override_font_sizes/font_size = 68
 text = "About"
+alignment = 0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Options" unique_id=1743637622]
-root_node = NodePath("../Start")
-libraries/ = SubResource("AnimationLibrary_nnt2q")
+[node name="Link" type="LinkButton" parent="." unique_id=1900429353]
+offset_left = 1605.0
+offset_top = 40.0
+offset_right = 1883.0
+offset_bottom = 362.0
+
+[node name="TextureRect" type="TextureRect" parent="Link" unique_id=1450232302]
+material = SubResource("ShaderMaterial_rxf60")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("7_ed7wi")
+script = ExtResource("8_d33c0")
+
+[node name="Color3" type="ColorRect" parent="." unique_id=1731029933]
+material = SubResource("ShaderMaterial_wvs2s")
+offset_left = -108.0
+offset_top = -70.0
+offset_right = 2034.0
+offset_bottom = 1202.0
+mouse_filter = 2
 
 [node name="Camera2D" parent="." unique_id=1821515391 instance=ExtResource("4_f5phj")]
 position = Vector2(966, 638)
 max_y_offset = 50.0
 max_x_offset = 50.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1702318794]
-offset_left = 137.0
-offset_top = 286.0
-offset_right = 1232.0
-offset_bottom = 477.0
-pivot_offset_ratio = Vector2(0.5, 0.5)
-theme_override_fonts/normal_font = ExtResource("6_f5phj")
-theme_override_font_sizes/normal_font_size = 166
-text = "Dear Fish feet,"
-
-[connection signal="pressed" from="Options/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="Options/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]
+[connection signal="mouse_entered" from="Link/TextureRect" to="Link/TextureRect" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Link/TextureRect" to="Link/TextureRect" method="_on_mouse_exited"]
