@@ -14,7 +14,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if can_open:
 		if Input.is_action_just_pressed("escape"): 
-			if opened: 
+			if opened:
+				if Settings.visible: return 
 				close()
 			else: 
 				open()
@@ -29,16 +30,23 @@ func _on_exit_pressed() -> void:
 
 func _on_settings_pressed() -> void:
 	Settings.open()
-	close()
-	print("Pause menu close, settings toggled")
+	#close()
+	print("Pause menu hidden behind, settings toggled")
 
 func open():
+	toggle_pause()
 	print(open)
 	opened = true
 	print("dbug: open pause menu")
 	show()
 	
 func close():
+	toggle_pause()
 	print(open)
 	opened = false
 	hide()
+	
+func toggle_pause() -> void:
+	var new_pause_state := not get_tree().paused
+	get_tree().paused = new_pause_state
+	visible = new_pause_state

@@ -1,38 +1,297 @@
 [gd_scene format=3 uid="uid://lxfryx8ogf58"]
 
 [ext_resource type="Script" uid="uid://bme2a6fgcmcjq" path="res://game/PauseMenu/scene/save_menu.gd" id="1_pkjc8"]
+[ext_resource type="Shader" uid="uid://cp440cn3ywou3" path="res://game/shaders/underwater_general.gdshader" id="2_3so83"]
+[ext_resource type="Texture2D" uid="uid://deo128eiv6dqn" path="res://game/main_menu/img/plain.png" id="2_fakje"]
+[ext_resource type="Shader" uid="uid://cnb4ydnrhg7je" path="res://game/ocean_texture.gdshader" id="4_4juij"]
+[ext_resource type="Texture2D" uid="uid://fdchh820n8nm" path="res://game/shader images/ocean.png" id="5_1up2v"]
+[ext_resource type="Theme" uid="uid://bmg6oq458mj52" path="res://game/theme/PlainButton.tres" id="6_mm5jv"]
+[ext_resource type="FontFile" uid="uid://b1sbds0pd4gao" path="res://fonts/veteran-typewriter/veteran typewriter.ttf" id="7_y7auc"]
+[ext_resource type="FontFile" uid="uid://b628cbec1bi1j" path="res://fonts/Beholden/Beholden-Bold.ttf" id="8_i8o88"]
+[ext_resource type="FontFile" uid="uid://pj5t7b8i4tcs" path="res://fonts/Beholden/Beholden-Bold-Italic.ttf" id="9_i8o88"]
+[ext_resource type="Script" uid="uid://bp3vcre46q37y" path="res://game/PauseMenu/scene/time_panel.gd" id="10_gau20"]
+[ext_resource type="Theme" uid="uid://dk63u7c2ce5d1" path="res://game/theme/Main_Text.tres" id="11_tl84e"]
+[ext_resource type="FontFile" uid="uid://3i21os4h65ta" path="res://fonts/Xanmono_Font_1_0/OpenType (.otf)/Xanmono-Regular.otf" id="12_qo5g0"]
 
-[node name="SaveMenu" type="Node2D" unique_id=75774294]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i7avt"]
+shader = ExtResource("2_3so83")
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/uv_scale = 2.9000000432134803
+shader_parameter/percentage = 1.0
+shader_parameter/speed = 1.0
+shader_parameter/wave_1_speed = -1.0
+shader_parameter/wave_2_speed = 1.0
+shader_parameter/wave_1_freq = 1.2
+shader_parameter/wave_2_freq = 1.0
+shader_parameter/wave_1_amp = 0.015
+shader_parameter/wave_2_amp = 0.01
+shader_parameter/sun_dir = Vector3(-0.2, 0.4, 1)
+shader_parameter/water_colour = Color(0.2, 0.627451, 0.6, 1)
+shader_parameter/foam_colour = Color(0.8, 0.9, 1, 1)
+shader_parameter/sky_colour = Color(0.2, 0.69411767, 0.6666667, 1)
+shader_parameter/specular_colour = Color(0.41248417, 0.6890611, 0.6890611, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qcnbq"]
+shader = ExtResource("4_4juij")
+shader_parameter/NOISE_TEXTURE = ExtResource("5_1up2v")
+shader_parameter/strength = 1.0
+shader_parameter/uv_scaling = 1.0
+shader_parameter/movement_direction = Vector2(1, 0)
+shader_parameter/movement_speed = 0.1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_homt8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l0myi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1m0sg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oiv1f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cftek"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_homt8"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lr7nq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lr7nq"]
+bg_color = Color(0.96862745, 0.7372549, 0.69411767, 0.44313726)
+
+[sub_resource type="Theme" id="Theme_gau20"]
+Button/colors/font_color = Color(0.9798239, 0.56172365, 0.44034007, 1)
+Button/colors/font_disabled_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(0.5921569, 0.4627451, 0.6627451, 1)
+Button/colors/font_hover_color = Color(0.38039216, 0.3019608, 0.78431374, 1)
+Button/colors/font_hover_pressed_color = Color(0.38039216, 0.3019608, 0.78431374, 1)
+Button/colors/font_outline_color = Color(0.98039216, 0.56078434, 0.4392157, 1)
+Button/colors/font_pressed_color = Color(0.38039216, 0.3019608, 0.78431374, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/constants/align_to_largest_stylebox = 0
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 16
+Button/fonts/font = ExtResource("7_y7auc")
+Button/styles/disabled = SubResource("StyleBoxEmpty_homt8")
+Button/styles/disabled_mirrored = SubResource("StyleBoxEmpty_homt8")
+Button/styles/focus = SubResource("StyleBoxEmpty_l0myi")
+Button/styles/hover = SubResource("StyleBoxEmpty_1m0sg")
+Button/styles/normal = SubResource("StyleBoxEmpty_oiv1f")
+Button/styles/pressed = SubResource("StyleBoxEmpty_cftek")
+Label/colors/font_color = Color(0.98039216, 0.56078434, 0.4392157, 1)
+Label/colors/font_outline_color = Color(0.6039216, 0.4627451, 0.34901962, 1)
+Label/constants/line_spacing = 3
+Label/constants/shadow_offset_x = 3
+Label/constants/shadow_offset_y = 2
+Label/constants/shadow_outline_size = 1
+Label/font_sizes/font_size = 16
+Label/fonts/font = ExtResource("7_y7auc")
+Label/styles/focus = SubResource("StyleBoxFlat_homt8")
+Label/styles/normal = SubResource("StyleBoxEmpty_lr7nq")
+OptionButton/font_sizes/font_size = 50
+OptionButton/fonts/font = ExtResource("8_i8o88")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_lr7nq")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_lr7nq")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3f5hn"]
+bg_color = Color(0.6, 0.87058824, 0.8352941, 1)
+corner_radius_top_left = 75
+corner_radius_top_right = 75
+corner_radius_bottom_right = 75
+corner_radius_bottom_left = 75
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tl84e"]
+bg_color = Color(0.6, 0.87058824, 0.8352941, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0.40784314, 0.5803922, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="SaveMenu" type="Control" unique_id=140108079]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_pkjc8")
 
-[node name="Panel" type="Panel" parent="." unique_id=1116060660]
-offset_left = 278.0
-offset_top = 192.0
-offset_right = 1663.0
-offset_bottom = 920.0
-size_flags_vertical = 4
+[node name="BG" type="ColorRect" parent="." unique_id=1432172496]
+material = SubResource("ShaderMaterial_i7avt")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Exit" type="Button" parent="." unique_id=729323274]
-custom_minimum_size = Vector2(0, 100)
-offset_left = 319.0
-offset_top = 797.0
-offset_right = 1610.0
-offset_bottom = 897.0
-theme_override_font_sizes/font_size = 30
-text = "Exit"
+[node name="TextureRect" type="TextureRect" parent="." unique_id=478960838]
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_fakje")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=986993889]
-offset_left = 319.0
-offset_top = 246.0
-offset_right = 1610.0
-offset_bottom = 736.0
+[node name="FG" type="ColorRect" parent="." unique_id=1905322282]
+material = SubResource("ShaderMaterial_qcnbq")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2080119505]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2136842813]
+propagate_maximum_size = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 120
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 120
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1077111116]
+layout_mode = 2
+theme = ExtResource("6_mm5jv")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=84744407]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 224
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=535625799]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer2" unique_id=121237043]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Button" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=1372394425]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme = SubResource("Theme_gau20")
+theme_override_colors/font_color = Color(0.08627451, 0, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("9_i8o88")
+theme_override_font_sizes/font_size = 66
+theme_override_styles/normal = SubResource("StyleBoxFlat_3f5hn")
+text = "Save 1"
+
+[node name="Button2" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=595765858]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme = SubResource("Theme_gau20")
+theme_override_colors/font_color = Color(0.08627451, 0, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("9_i8o88")
+theme_override_font_sizes/font_size = 66
+theme_override_styles/normal = SubResource("StyleBoxFlat_3f5hn")
+text = "Save 1"
+
+[node name="Button3" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=925837516]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme = SubResource("Theme_gau20")
+theme_override_colors/font_color = Color(0.08627451, 0, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("9_i8o88")
+theme_override_font_sizes/font_size = 66
+theme_override_styles/normal = SubResource("StyleBoxFlat_3f5hn")
+text = "Save 1"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer2" unique_id=61303665]
 layout_mode = 2
 alignment = 1
 
-[node name="Save" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1171885231]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "Save 1 - "
+[node name="Save" type="Button" parent="." unique_id=1760260310]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 859.0
+offset_right = 584.0
+offset_bottom = 1009.0
+theme = SubResource("Theme_gau20")
+theme_override_colors/font_color = Color(0.08627451, 0, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("9_i8o88")
+theme_override_font_sizes/font_size = 66
+theme_override_styles/normal = SubResource("StyleBoxFlat_3f5hn")
+text = "Save"
+
+[node name="Load" type="Button" parent="." unique_id=767155846]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 0
+offset_left = 601.0
+offset_top = 860.0
+offset_right = 998.0
+offset_bottom = 1010.0
+theme = SubResource("Theme_gau20")
+theme_override_colors/font_color = Color(0.08627451, 0, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("9_i8o88")
+theme_override_font_sizes/font_size = 66
+theme_override_styles/normal = SubResource("StyleBoxFlat_3f5hn")
+text = "Load"
+
+[node name="TimePanel" type="Panel" parent="." unique_id=1497232040]
+layout_mode = 0
+offset_left = 1074.0
+offset_top = 828.0
+offset_right = 1721.0
+offset_bottom = 1018.0
+theme = ExtResource("6_mm5jv")
+theme_override_styles/panel = SubResource("StyleBoxFlat_tl84e")
+script = ExtResource("10_gau20")
+
+[node name="Label" type="Label" parent="TimePanel" unique_id=1238586644]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("11_tl84e")
+theme_override_colors/font_color = Color(0.998359, 0.9631886, 0.95273036, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0.5882353, 0.15294118)
+theme_override_colors/font_outline_color = Color(0.20536284, 0.28903842, 0.2177592, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("12_qo5g0")
+theme_override_font_sizes/font_size = 38
+text = "1:11"
+horizontal_alignment = 1
+vertical_alignment = 1

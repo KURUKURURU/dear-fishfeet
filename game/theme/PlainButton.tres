@@ -39,6 +39,16 @@ expand_margin_bottom = 2.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lr7nq"]
 bg_color = Color(0.96862745, 0.7372549, 0.69411767, 0.44313726)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qcnbq"]
+bg_color = Color(0.08627451, 0.10980392, 0.3254902, 0.53333336)
+border_width_left = 3
+border_width_top = 9
+border_color = Color(0.80261075, 0.9459303, 0.9249403, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
 [resource]
 Button/colors/font_color = Color(0.9798239, 0.56172365, 0.44034007, 1)
 Button/colors/font_disabled_color = Color(0, 0, 0, 1)
@@ -79,3 +89,4 @@ OptionButton/font_sizes/font_size = 50
 OptionButton/fonts/font = ExtResource("2_l0myi")
 OptionButton/styles/normal = SubResource("StyleBoxFlat_lr7nq")
 OptionButton/styles/pressed = SubResource("StyleBoxFlat_lr7nq")
+Panel/styles/panel = SubResource("StyleBoxFlat_qcnbq")

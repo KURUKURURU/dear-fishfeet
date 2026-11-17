@@ -12,6 +12,7 @@ extends CanvasLayer
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var opened := false
+var menu_open := false
 
 func _ready() -> void:
 	button_group.pressed.connect(_on_button_group_pressed)
@@ -40,7 +41,9 @@ func _on_button_group_pressed(button: BaseButton) -> void:
 		print("currently active: ", active_button.text)
 
 func open():
-	toggle_pause()
+	#toggle_pause()
+	#if PauseMenu.visible: menu_open = true
+	
 	opened = true
 	
 	Ui.paper_slide()
@@ -72,15 +75,17 @@ func _on_resolutions_item_selected(index: int) -> void:
 			DisplayServer.window_set_size(Vector2i(1280, 720))
 
 func _on_close_pressed() -> void:
-	toggle_pause()
+	#toggle_pause()
+	#if menu_open: PauseMenu.open()
+	
 	opened = false
 	
 	Ui.paper_slide()
 	animation_player.play("slide_card_exit")
 	await animation_player.animation_finished
 	hide()
-
-func toggle_pause() -> void:
-	var new_pause_state := not get_tree().paused
-	get_tree().paused = new_pause_state
-	visible = new_pause_state
+#
+#func toggle_pause() -> void:
+	#var new_pause_state := not get_tree().paused
+	#get_tree().paused = new_pause_state
+	#visible = new_pause_state

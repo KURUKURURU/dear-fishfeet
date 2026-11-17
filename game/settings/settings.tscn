@@ -76,6 +76,7 @@ _data = {
 }
 
 [node name="Settings" type="CanvasLayer" unique_id=411195014]
+process_mode = 3
 layer = 10
 offset = Vector2(0, -1080)
 transform = Transform2D(1, 0, 0, 1, 0, -1080)
@@ -298,6 +299,17 @@ text = "Other"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2062690443]
 libraries/ = SubResource("AnimationLibrary_kk3cj")
+
+[node name="Label" type="Label" parent="." unique_id=357280147]
+offset_left = 96.0
+offset_top = 804.0
+offset_right = 668.0
+offset_bottom = 991.0
+theme = ExtResource("6_kwjb8")
+theme_override_font_sizes/font_size = 40
+text = "Press Esc Key to Close"
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [connection signal="item_selected" from="MarginContainer/Viewport/Resolution/Resolutions" to="." method="_on_resolutions_item_selected"]
 [connection signal="value_changed" from="MarginContainer/Audio/Master/Volume" to="." method="_on_volume_value_changed"]
