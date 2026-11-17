@@ -4,9 +4,80 @@
 [ext_resource type="Texture2D" uid="uid://bl1jan1gpoec" path="res://game/settings/img/fullscreenmenu.png" id="3_mhlmc"]
 [ext_resource type="ButtonGroup" uid="uid://c1mov4gfckacl" path="res://game/settings/settings_button_group.tres" id="3_ng7nq"]
 [ext_resource type="Texture2D" uid="uid://cat6hq5kng4ir" path="res://game/settings/img/border.png" id="4_3rk3t"]
+[ext_resource type="Animation" uid="uid://dx5c21fn2teml" path="res://globalanimation/silde_card_down.res" id="6_3rk3t"]
 [ext_resource type="Theme" uid="uid://bmg6oq458mj52" path="res://game/theme/PlainButton.tres" id="6_kwjb8"]
 
+[sub_resource type="Animation" id="Animation_kwjb8"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1080, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_7lpcg"]
+resource_name = "sllide_card_exit"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.16666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1080, -0.7, -170.5, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kk3cj"]
+_data = {
+&"RESET": SubResource("Animation_kwjb8"),
+&"slide_card_enter": ExtResource("6_3rk3t"),
+&"slide_card_exit": SubResource("Animation_7lpcg")
+}
+
 [node name="Settings" type="CanvasLayer" unique_id=411195014]
+offset = Vector2(0, -1080)
+transform = Transform2D(1, 0, 0, 1, 0, -1080)
 script = ExtResource("1_epgy0")
 button_group = ExtResource("3_ng7nq")
 
@@ -29,6 +100,7 @@ offset_right = 1784.0
 offset_bottom = 869.0
 
 [node name="General" type="VBoxContainer" parent="MarginContainer" unique_id=133013010]
+visible = false
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/General" unique_id=1667053279]
@@ -82,21 +154,80 @@ popup/item_2/text = "1280 x 720"
 popup/item_2/id = 2
 
 [node name="Audio" type="VBoxContainer" parent="MarginContainer" unique_id=545990769]
-visible = false
 layout_mode = 2
 
-[node name="CustomVolume" type="HBoxContainer" parent="MarginContainer/Audio" unique_id=1614541049]
+[node name="Master" type="HBoxContainer" parent="MarginContainer/Audio" unique_id=1614541049]
 layout_mode = 2
 theme_override_constants/separation = 54
-alignment = 1
+alignment = 2
 
-[node name="Volume_Label" type="Label" parent="MarginContainer/Audio/CustomVolume" unique_id=1820211828]
+[node name="Volume_Label" type="Label" parent="MarginContainer/Audio/Master" unique_id=1820211828]
 layout_mode = 2
 theme = ExtResource("6_kwjb8")
 theme_override_font_sizes/font_size = 78
-text = "Volume"
+text = "Master"
 
-[node name="Volume" type="HSlider" parent="MarginContainer/Audio/CustomVolume" unique_id=1082992548]
+[node name="Volume" type="HSlider" parent="MarginContainer/Audio/Master" unique_id=1082992548]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+max_value = 2.0
+step = 0.01
+value = 2.0
+
+[node name="Music" type="HBoxContainer" parent="MarginContainer/Audio" unique_id=1454587621]
+layout_mode = 2
+theme_override_constants/separation = 54
+alignment = 2
+
+[node name="Volume_Label" type="Label" parent="MarginContainer/Audio/Music" unique_id=388342571]
+layout_mode = 2
+theme = ExtResource("6_kwjb8")
+theme_override_font_sizes/font_size = 78
+text = "Music"
+
+[node name="Volume" type="HSlider" parent="MarginContainer/Audio/Music" unique_id=655546566]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+max_value = 2.0
+step = 0.01
+value = 2.0
+
+[node name="SFX" type="HBoxContainer" parent="MarginContainer/Audio" unique_id=1813369933]
+layout_mode = 2
+theme_override_constants/separation = 54
+alignment = 2
+
+[node name="Volume_Label" type="Label" parent="MarginContainer/Audio/SFX" unique_id=2131805690]
+layout_mode = 2
+theme = ExtResource("6_kwjb8")
+theme_override_font_sizes/font_size = 78
+text = "SFX"
+
+[node name="Volume" type="HSlider" parent="MarginContainer/Audio/SFX" unique_id=945663004]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+max_value = 2.0
+step = 0.01
+value = 2.0
+
+[node name="Ambience" type="HBoxContainer" parent="MarginContainer/Audio" unique_id=791388876]
+layout_mode = 2
+theme_override_constants/separation = 54
+alignment = 2
+
+[node name="Volume_Label" type="Label" parent="MarginContainer/Audio/Ambience" unique_id=2119038873]
+layout_mode = 2
+theme = ExtResource("6_kwjb8")
+theme_override_font_sizes/font_size = 78
+text = "Ambience"
+
+[node name="Volume" type="HSlider" parent="MarginContainer/Audio/Ambience" unique_id=1201703632]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -108,7 +239,7 @@ value = 2.0
 [node name="Mute" type="HBoxContainer" parent="MarginContainer/Audio" unique_id=1121582765]
 layout_mode = 2
 theme_override_constants/separation = 54
-alignment = 1
+alignment = 2
 
 [node name="Mute_Label" type="Label" parent="MarginContainer/Audio/Mute" unique_id=1708477281]
 layout_mode = 2
@@ -173,7 +304,13 @@ toggle_mode = true
 button_group = ExtResource("3_ng7nq")
 text = "Other"
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2062690443]
+libraries/ = SubResource("AnimationLibrary_kk3cj")
+
 [connection signal="item_selected" from="MarginContainer/Viewport/Resolution/Resolutions" to="." method="_on_resolutions_item_selected"]
-[connection signal="value_changed" from="MarginContainer/Audio/CustomVolume/Volume" to="." method="_on_volume_value_changed"]
+[connection signal="value_changed" from="MarginContainer/Audio/Master/Volume" to="." method="_on_volume_value_changed"]
+[connection signal="value_changed" from="MarginContainer/Audio/Music/Volume" to="." method="_on_music_volume_value_changed"]
+[connection signal="value_changed" from="MarginContainer/Audio/SFX/Volume" to="." method="_on_sfx_volume_value_changed"]
+[connection signal="value_changed" from="MarginContainer/Audio/Ambience/Volume" to="." method="_on_ambience_volume_value_changed"]
 [connection signal="toggled" from="MarginContainer/Audio/Mute/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="Close" to="." method="_on_close_pressed"]

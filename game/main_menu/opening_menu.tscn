@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b2jt7wdb32avo" path="res://game/main_menu/img/stamp link.png" id="7_ed7wi"]
 [ext_resource type="Script" uid="uid://wkq433n276bt" path="res://game/main_menu/simple_hover.gd" id="8_d33c0"]
 [ext_resource type="FontFile" uid="uid://b1sbds0pd4gao" path="res://fonts/veteran-typewriter/veteran typewriter.ttf" id="10_nnt2q"]
-[ext_resource type="AudioStream" uid="uid://b5eqqa27l0vm4" path="res://game/sfx/button.wav" id="11_ed7wi"]
+[ext_resource type="AudioStream" uid="uid://dare1b6cogp0m" path="res://game/sfx/Fishfeet.mp3" id="11_ed7wi"]
 
 [sub_resource type="Animation" id="Animation_euthe"]
 length = 0.001
@@ -185,9 +185,9 @@ mouse_filter = 2
 [node name="Node2D" type="Node2D" parent="." unique_id=1662123565]
 
 [node name="Theme" type="AudioStreamPlayer" parent="." unique_id=1160132779]
-
-[node name="Button" type="AudioStreamPlayer" parent="." unique_id=1184587495]
 stream = ExtResource("11_ed7wi")
+volume_db = -14.378
+autoplay = true
 
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]

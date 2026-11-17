@@ -1,6 +1,7 @@
 extends CanvasLayer
 @onready var button_sfx: AudioStreamPlayer = $ButtonSFX
 @onready var focus_button_sfx: AudioStreamPlayer = $FocusButtonSFX
+@onready var paper_slide_sfx: AudioStreamPlayer = $PaperSlideSFX
 
 func _ready()->void:
 	var buttons: Array = get_tree().get_nodes_in_group("Button")
@@ -10,4 +11,4 @@ func _ready()->void:
 
 func on_button_pressed()->void: button_sfx.play()
 func on_button_focused()->void: focus_button_sfx.play()
-func on_button_focused()->void: focus_button_sfx.play()
+func paper_slide(): paper_slide_sfx.play()

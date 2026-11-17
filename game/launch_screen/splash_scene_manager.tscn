@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://cf2s51lk3yj2l"]
+
+[ext_resource type="Script" uid="uid://s5sjj2tt8xi2" path="res://game/launch_screen/splash_scene_manager.gd" id="1_kagma"]
+[ext_resource type="Texture2D" uid="uid://b61mb06a3grk0" path="res://game/launch_screen/launch_icon.png" id="1_x02mr"]
+[ext_resource type="FontFile" uid="uid://b1sbds0pd4gao" path="res://fonts/veteran-typewriter/veteran typewriter.ttf" id="2_kagma"]
+[ext_resource type="AudioStream" uid="uid://duxde753psuv3" path="res://game/sfx/LaunchTheme.mp3" id="3_1iq60"]
+
+[sub_resource type="Animation" id="Animation_1iq60"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer:modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer:modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterContainer:modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CenterContainer:modulate:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.003921569, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_2ndx0"]
+resource_name = "fade"
+length = 6.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer:modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0, 2),
+"points": PackedFloat32Array(1, 0, 0, 0.40833336, 0, 1, -0.25, 0, 0.25, 0, 1, -0.425, 0, 0, 0),
+"times": PackedFloat32Array(0, 2.45, 5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer:modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0, 2),
+"points": PackedFloat32Array(1, 0, 0, 0.40833336, 0, 1, -0.25, 0, 0.25, 0, 1, -0.425, 0, 0, 0),
+"times": PackedFloat32Array(0, 2.45, 5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterContainer:modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 0, 2),
+"points": PackedFloat32Array(1, 0, 0, 0.40833336, 0, 1, -0.25, 0, 0.25, 0, 1, -0.425, 0, 0, 0),
+"times": PackedFloat32Array(0, 2.45, 5)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CenterContainer:modulate:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(2, 0, 2),
+"points": PackedFloat32Array(0.003921569, 0, 0, 0.40833336, 0.16601308, 1, -0.25, 0, 0.25, 0, 0, -0.425, 0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 4.2, 5)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Theme:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yvhj4"]
+_data = {
+&"RESET": SubResource("Animation_1iq60"),
+&"fade": SubResource("Animation_2ndx0")
+}
+
+[node name="splash_scene_manager" type="Control" unique_id=263859945]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kagma")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=863174548]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=534159881]
+modulate = Color(1, 1, 1, 0.003921569)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=890943496]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer" unique_id=594354899]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+texture = ExtResource("1_x02mr")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/VBoxContainer" unique_id=1799004520]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_kagma")
+theme_override_font_sizes/normal_font_size = 43
+bbcode_enabled = true
+text = "[wave]Minisoda"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Theme" type="AudioStreamPlayer" parent="." unique_id=1312599927]
+stream = ExtResource("3_1iq60")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1234852501]
+libraries/ = SubResource("AnimationLibrary_yvhj4")

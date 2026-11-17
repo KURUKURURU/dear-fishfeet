@@ -9,6 +9,9 @@ extends CanvasLayer
 @onready var main_page_viewport= $MarginContainer/Viewport
 @onready var main_page_audio = $MarginContainer/Audio
 @onready var main_page_other = $MarginContainer/Other
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+var opened := false
 
 func _ready() -> void:
 	button_group.pressed.connect(_on_button_group_pressed)
@@ -16,7 +19,11 @@ func _ready() -> void:
 	_on_button_group_pressed(general)
 
 func _process(delta: float) -> void:
-	pass
+	if opened:
+		if Input.is_action_just_pressed("escape"): 
+			await _on_close_pressed() 
+			PauseMenu.open()
+		
 
 func _on_button_group_pressed(button: BaseButton) -> void:
 	print("settings button select: ", button.name)
@@ -35,10 +42,24 @@ func _on_button_group_pressed(button: BaseButton) -> void:
 		print("currently active: ", active_button.text)
 
 func open():
+	PauseMenu.can_open = false
+	opened = true
+	
+	Ui.paper_slide()
+	animation_player.play("slide_card_enter")
 	show()
 
 func _on_volume_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(0, linear_to_db(value/5))
+
+func _on_music_volume_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(1, linear_to_db(value/5))
+
+func _on_sfx_volume_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(2, linear_to_db(value/5))
+
+func _on_ambience_volume_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(3, linear_to_db(value/5))
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
 	AudioServer.set_bus_mute(0, toggled_on)
@@ -53,4 +74,10 @@ func _on_resolutions_item_selected(index: int) -> void:
 			DisplayServer.window_set_size(Vector2i(1280, 720))
 
 func _on_close_pressed() -> void:
+	PauseMenu.can_open = true
+	opened = false
+	
+	Ui.paper_slide()
+	animation_player.play("slide_card_exit")
+	await animation_player.animation_finished
 	hide()

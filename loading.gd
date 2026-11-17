@@ -1,5 +1,5 @@
 extends Node2D
-@onready var progress_bar: ProgressBar = $ProgressBar
+@onready var progress_bar: ProgressBar = $MarginContainer/ProgressBar
 
 var progress : Array[float] = []
 
