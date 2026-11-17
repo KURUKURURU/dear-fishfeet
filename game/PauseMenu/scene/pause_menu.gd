@@ -22,10 +22,10 @@ func _process(delta: float) -> void:
 		if visible: hide()
 
 func _on_continue_pressed() -> void:
-	hide()
+	close()
 
 func _on_exit_pressed() -> void:
-	hide()
+	close()
 
 func _on_settings_pressed() -> void:
 	Settings.open()

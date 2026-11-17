@@ -22,8 +22,6 @@ func _process(delta: float) -> void:
 	if opened:
 		if Input.is_action_just_pressed("escape"): 
 			await _on_close_pressed() 
-			PauseMenu.open()
-		
 
 func _on_button_group_pressed(button: BaseButton) -> void:
 	print("settings button select: ", button.name)
@@ -42,7 +40,7 @@ func _on_button_group_pressed(button: BaseButton) -> void:
 		print("currently active: ", active_button.text)
 
 func open():
-	PauseMenu.can_open = false
+	toggle_pause()
 	opened = true
 	
 	Ui.paper_slide()
@@ -74,10 +72,15 @@ func _on_resolutions_item_selected(index: int) -> void:
 			DisplayServer.window_set_size(Vector2i(1280, 720))
 
 func _on_close_pressed() -> void:
-	PauseMenu.can_open = true
+	toggle_pause()
 	opened = false
 	
 	Ui.paper_slide()
 	animation_player.play("slide_card_exit")
 	await animation_player.animation_finished
 	hide()
+
+func toggle_pause() -> void:
+	var new_pause_state := not get_tree().paused
+	get_tree().paused = new_pause_state
+	visible = new_pause_state

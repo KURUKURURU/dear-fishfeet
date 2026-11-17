@@ -76,6 +76,7 @@ _data = {
 }
 
 [node name="Settings" type="CanvasLayer" unique_id=411195014]
+layer = 10
 offset = Vector2(0, -1080)
 transform = Transform2D(1, 0, 0, 1, 0, -1080)
 script = ExtResource("1_epgy0")
@@ -239,7 +240,7 @@ value = 2.0
 [node name="Mute" type="HBoxContainer" parent="MarginContainer/Audio" unique_id=1121582765]
 layout_mode = 2
 theme_override_constants/separation = 54
-alignment = 2
+alignment = 1
 
 [node name="Mute_Label" type="Label" parent="MarginContainer/Audio/Mute" unique_id=1708477281]
 layout_mode = 2
@@ -254,15 +255,6 @@ theme = ExtResource("6_kwjb8")
 
 [node name="Other" type="VBoxContainer" parent="MarginContainer" unique_id=1074935029]
 layout_mode = 2
-
-[node name="Close" type="Button" parent="." unique_id=1068359045 groups=["Button"]]
-offset_left = 171.0
-offset_top = 832.0
-offset_right = 585.0
-offset_bottom = 960.0
-theme = ExtResource("6_kwjb8")
-theme_override_font_sizes/font_size = 87
-text = "close"
 
 [node name="SettingsList" type="VBoxContainer" parent="." unique_id=1403201868]
 offset_left = 176.0
@@ -313,4 +305,3 @@ libraries/ = SubResource("AnimationLibrary_kk3cj")
 [connection signal="value_changed" from="MarginContainer/Audio/SFX/Volume" to="." method="_on_sfx_volume_value_changed"]
 [connection signal="value_changed" from="MarginContainer/Audio/Ambience/Volume" to="." method="_on_ambience_volume_value_changed"]
 [connection signal="toggled" from="MarginContainer/Audio/Mute/CheckBox" to="." method="_on_check_box_toggled"]
-[connection signal="pressed" from="Close" to="." method="_on_close_pressed"]
